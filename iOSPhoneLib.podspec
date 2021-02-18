@@ -1,42 +1,22 @@
-#
-# Be sure to run `pod lib lint iOSPhoneLib.podspec' to ensure this is a
-# valid spec before submitting.
-#
-# Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see https://guides.cocoapods.org/syntax/podspec.html
-#
-
 Pod::Spec.new do |s|
   s.name             = 'iOSPhoneLib'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of iOSPhoneLib.'
+  s.summary          = 'Allow for easy implementation of SIP into a swift project.'
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
+
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+This library is an opinionated sip-wrapper, currently using Linphone as the base.
                        DESC
 
-  s.homepage         = 'https://github.com/jeremynorman89/iOSPhoneLib'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  s.homepage         = 'https://gitlab.wearespindle.com/vialer/mobile/voip/ios-phone-lib'
+  s.license          = { :type => 'AGPL', :file => 'LICENSE' }
   s.author           = { 'jeremynorman89' => 'jeremy.norman@wearespindle.com' }
-  s.source           = { :git => 'https://github.com/jeremynorman89/iOSPhoneLib.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.source           = { :git => 'https://github.com/open-voip-alliance/iOSPhoneLib.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '11.3'
 
   s.source_files = 'iOSPhoneLib/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'iOSPhoneLib' => ['iOSPhoneLib/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'linphone-sdk', '4.4.1'
 end

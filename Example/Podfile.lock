@@ -1,0 +1,37 @@
+PODS:
+  - iOSPhoneLib (0.1.0):
+    - linphone-sdk (= 4.4.1)
+  - linphone-sdk (4.4.1):
+    - linphone-sdk/all-frameworks (= 4.4.1)
+    - linphone-sdk/app-extension (= 4.4.1)
+    - linphone-sdk/app-extension-swift (= 4.4.1)
+    - linphone-sdk/basic-frameworks (= 4.4.1)
+    - linphone-sdk/swift (= 4.4.1)
+  - linphone-sdk/all-frameworks (4.4.1)
+  - linphone-sdk/app-extension (4.4.1)
+  - linphone-sdk/app-extension-swift (4.4.1):
+    - linphone-sdk/app-extension
+  - linphone-sdk/basic-frameworks (4.4.1):
+    - linphone-sdk/app-extension
+  - linphone-sdk/swift (4.4.1):
+    - linphone-sdk/app-extension-swift
+    - linphone-sdk/basic-frameworks
+
+DEPENDENCIES:
+  - iOSPhoneLib (from `../`)
+
+SPEC REPOS:
+  https://gitlab.linphone.org/BC/public/podspec.git:
+    - linphone-sdk
+
+EXTERNAL SOURCES:
+  iOSPhoneLib:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  iOSPhoneLib: 0730c82fd91d77df1584b6dcb38dc985ee3e7986
+  linphone-sdk: 91183cb3e3224d2d1a211357cd6a39d61636d17d
+
+PODFILE CHECKSUM: c7e9778ea2db7c035e44a1509383c2b85027982d
+
+COCOAPODS: 1.8.4
