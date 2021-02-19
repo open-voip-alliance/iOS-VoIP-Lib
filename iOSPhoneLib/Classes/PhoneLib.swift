@@ -42,11 +42,7 @@ public class PhoneLib {
         sipManager.registrationDelegate = self
         sipManager.sessionDelegate = self
     }
-
-    public func initialize(config: Config) {
-
-    }
-
+    
     /// This `registers` your user on SIP. You need this before placing a call.
     ///
     /// - Parameters:
