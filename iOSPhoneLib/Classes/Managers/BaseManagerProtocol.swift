@@ -14,7 +14,8 @@ protocol BaseManagerProtocol: AnyObject {
     var isMicrophoneMuted:Bool { get }
     var isSpeakerOn:Bool { get }
 
-    func register(domain:String, port:Int, username:String, password:String, encrypted:Bool) -> Bool
+    func initialize(config: Config) -> Bool
+    func register() -> Bool
     func unregister(finished:@escaping() -> ())
     func call(to number: String) -> Session?
     func acceptCall(for session: Session) -> Bool

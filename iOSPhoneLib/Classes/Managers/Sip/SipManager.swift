@@ -33,10 +33,13 @@ class SipManager: NSObject, SipManagerProtocol {
         self.sipSdkManager.registrationDelegate = self
         self.sipSdkManager.sessionDelegate = self
     }
+
+    func initialize(config: Config) -> Bool {
+        sipSdkManager.initialize(config: config)
+    }
     
-    func register(domain: String, port: Int, username: String, password: String, encrypted: Bool) -> Bool {
-        guard sipSdkManager.setup() else { return false }
-        return sipSdkManager.register(domain: domain, port: port, username: username, password: password, encrypted: encrypted)
+    func register() -> Bool {
+        sipSdkManager.register()
     }
     
     func unregister(finished:@escaping() -> ()) {

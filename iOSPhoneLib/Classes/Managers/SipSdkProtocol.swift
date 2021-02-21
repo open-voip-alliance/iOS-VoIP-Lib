@@ -9,6 +9,6 @@ import Foundation
 
 protocol SipSdkProtocol: BaseManagerProtocol {
     var sessionDelegate:SipSDKDelegate? { get set }
-    
-    func setup() -> Bool
+
+    var isInitialized: Bool { get }
 }
