@@ -15,8 +15,9 @@ class LinphoneManager:SipSdkProtocol {
     
     weak var sessionDelegate:SipSDKDelegate?
     weak var registrationDelegate:RegistrationStateDelegate?
-    
-    private var isInitialized: Bool = false
+
+    private var config: Config?
+    var isInitialized: Bool = false
     //Linphone Core
     private var lc: Core!
     private var stateManager:LinphoneStateManager!
@@ -29,8 +30,7 @@ class LinphoneManager:SipSdkProtocol {
     }
     
     var isSpeakerOn: Bool {
-        true
-        //todo return AVAudioSession.sharedInstance().currentRoute.outputs.contains(where: { $0.portType == .builtInSpeaker })
+        AVAudioSession.sharedInstance().currentRoute.outputs.contains(where: { $0.portType == AVAudioSessionPortBuiltInSpeaker })
     }
     
     init() {
@@ -38,7 +38,8 @@ class LinphoneManager:SipSdkProtocol {
         stateManager = LinphoneStateManager(manager: self)
     }
 
-    func setup() -> Bool {
+    func initialize(config: Config) -> Bool {
+        self.config = config
         guard !isInitialized else {
             debugPrint("Linphone already init")
             return true
@@ -101,26 +102,30 @@ class LinphoneManager:SipSdkProtocol {
     }
     
     //MARK: - SipSdkProtocol
-    func register(domain:String, port:Int, username:String, password:String, encrypted:Bool) -> Bool {
+    func register() -> Bool {
         let factory = Factory.Instance
         do {
-            let identity = "sip:" + username + "@" + domain + ":\(port)"
-            let from = try factory.createAddress(addr: identity)
-            try from.setTransport(newValue: encrypted ? .Tls : .Udp)
+            guard let config = self.config else {
+                throw InitializationError.noConfigurationProvided
+            }
             
-            if encrypted, let transports:Transports = lc.transports {
+            let identity = "sip:" + config.auth.name + "@" + config.auth.domain + ":\(config.auth.port)"
+            let from = try factory.createAddress(addr: identity)
+            try from.setTransport(newValue: config.encryption ? .Tls : .Udp)
+            
+            if config.encryption, let transports:Transports = lc.transports {
                 from.secure = true //Force calling via TLS
-                transports.tlsPort = port
-                transports.udpPort = port
-                transports.tcpPort = port
+                transports.tlsPort = config.auth.port
+                transports.udpPort = config.auth.port
+                transports.tcpPort = config.auth.port
                 try lc.setTransports(newValue: transports)
                 try lc.setMediaencryption(newValue: MediaEncryption.SRTP)
                 lc.mediaEncryptionMandatory = true
             }
             
-            try setupProxy(from: from, encrypted: encrypted)
+            try setupProxy(from: from, encrypted: config.encryption)
             
-            let info = try factory.createAuthInfo(username: from.username, userid: "", passwd: password, ha1: "", realm: "", domain: "") // create authentication structure from identity
+            let info = try factory.createAuthInfo(username: from.username, userid: "", passwd: config.auth.password, ha1: "", realm: "", domain: "") // create authentication structure from identity
             lc.addAuthInfo(info: info) // add authentication arianinfo to LinphoneCore
             
             lc.useRfc2833ForDtmf = true

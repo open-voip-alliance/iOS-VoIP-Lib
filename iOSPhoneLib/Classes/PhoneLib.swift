@@ -42,18 +42,15 @@ public class PhoneLib {
         sipManager.registrationDelegate = self
         sipManager.sessionDelegate = self
     }
+
+    public func initialize(config: Config) {
+        sipManager.initialize(config: config)
+    }
     
     /// This `registers` your user on SIP. You need this before placing a call.
-    ///
-    /// - Parameters:
-    ///     - domain: The SIP server IP or host
-    ///     - port: The SIP server port
-    ///     - username: The SIP username
-    ///     - password: The SIP password
-    ///     - encrypted: Use TLS
     /// - Returns: Bool containing register result
-    public func register(domain:String, port:Int, username:String, password:String, encrypted:Bool) -> Bool {
-        return sipManager.register(domain: domain, port: port, username: username, password: password, encrypted: encrypted)
+    public func register() -> Bool {
+        sipManager.register()
     }
     
     /// This `unregisters` your user on SIP.
