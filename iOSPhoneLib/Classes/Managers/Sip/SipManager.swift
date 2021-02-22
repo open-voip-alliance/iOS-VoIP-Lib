@@ -8,6 +8,9 @@
 import Foundation
 
 class SipManager: NSObject, SipManagerProtocol {
+    var isRegistered: Bool = false
+    
+    var isInitialized: Bool = false
     
     weak var registrationDelegate:RegistrationStateDelegate?
     weak var sessionDelegate:CallDelegate?
@@ -40,6 +43,10 @@ class SipManager: NSObject, SipManagerProtocol {
     
     func register() -> Bool {
         sipSdkManager.register()
+    }
+    
+    func destroy() {
+        sipSdkManager.destroy()
     }
     
     func unregister(finished:@escaping() -> ()) {

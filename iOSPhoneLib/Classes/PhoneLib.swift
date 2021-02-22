@@ -10,7 +10,19 @@ import Foundation
 public class PhoneLib {
     
     static public let shared = PhoneLib()
-    
+
+    public var isRegistered: Bool {
+        get { sipManager.isRegistered }
+    }
+
+    public var isInitialized: Bool {
+        get { sipManager.isInitialized }
+    }
+
+    public var isReady: Bool {
+        get { isRegistered && isInitialized }
+    }
+
     ///For retrieving registration state change callbacks
     public weak var registrationDelegate:RegistrationStateDelegate?
     
@@ -51,6 +63,10 @@ public class PhoneLib {
     /// - Returns: Bool containing register result
     public func register() -> Bool {
         sipManager.register()
+    }
+
+    public func destroy() {
+        sipManager.destroy()
     }
     
     /// This `unregisters` your user on SIP.

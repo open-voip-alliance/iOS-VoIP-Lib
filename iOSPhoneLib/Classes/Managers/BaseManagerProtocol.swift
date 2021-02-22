@@ -13,10 +13,13 @@ protocol BaseManagerProtocol: AnyObject {
     
     var isMicrophoneMuted:Bool { get }
     var isSpeakerOn:Bool { get }
+    var isRegistered:Bool {get}
+    var isInitialized: Bool { get }
 
     func initialize(config: Config) -> Bool
     func register() -> Bool
     func unregister(finished:@escaping() -> ())
+    func destroy()
     func call(to number: String) -> Session?
     func acceptCall(for session: Session) -> Bool
     func endCall(for session: Session) -> Bool
