@@ -18,6 +18,8 @@ class LinphoneManager:SipSdkProtocol {
 
     private var config: Config?
     var isInitialized: Bool = false
+    var isRegistered: Bool = false
+
     //Linphone Core
     private var lc: Core!
     private var stateManager:LinphoneStateManager!
@@ -157,20 +159,23 @@ class LinphoneManager:SipSdkProtocol {
                     print("Linphone unregistering error on proxy: \(error)")
                 } // initiate REGISTER with expire = 0
             }
-            self.isInitialized = false
+
+            self.isRegistered = false
             
             while(self.lc.proxyConfigList.contains(where: { $0.state != RegistrationState.Cleared } )) {
                 self.lc.iterate() // to make sure we receive call backs before shutting down
                 usleep(50000)
             }
             self.lc.proxyConfigList.forEach( { self.lc.removeProxyConfig(config: $0) } )
-            self.lc.removeDelegate(delegate: self.stateManager)
-            self.lc.stop()
-            print("Linphone unregistered")
-            DispatchQueue.main.async {
-                finished()
-            }
         }
+    }
+
+    func destroy() {
+        isInitialized = false
+        isRegistered = false
+        lc.removeDelegate(delegate: stateManager)
+        lc.stop()
+        print("Linphone unregistered")
     }
     
     func call(to number: String) -> Session? {
@@ -332,6 +337,13 @@ class LinphoneStateManager:CoreDelegate {
     override func onRegistrationStateChanged(lc: Core, cfg: ProxyConfig, cstate: RegistrationState, message: String?) {
         print("onRegistrationStateChanged: \(cfg.transport); Mes: \(message ?? "")")
         guard let newState = SipRegistrationStatus(rawValue: cstate.rawValue) else { return }
+
+        if newState == SipRegistrationStatus.registered {
+            linphoneManager.isRegistered = true
+        } else if newState == SipRegistrationStatus.failed {
+            linphoneManager.isRegistered = false
+        }
+
         if newState != linphoneManager.sipRegistrationStatus {
             linphoneManager.sipRegistrationStatus = newState
             DispatchQueue.main.async {
