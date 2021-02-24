@@ -25,14 +25,7 @@ public class PhoneLib {
 
     ///For retrieving registration state change callbacks
     public weak var registrationDelegate:RegistrationStateDelegate?
-    
-    ///For retrieving session state change callbacks
-    public weak var sessionDelegate:CallDelegate?
-    
-    public var registrationStatus:SipRegistrationStatus {
-        sipManager.sipRegistrationStatus
-    }
-    
+        
     public var isMicrophoneMuted:Bool {
         sipManager.isMicrophoneMuted
     }
@@ -41,20 +34,12 @@ public class PhoneLib {
         sipManager.isSpeakerOn
     }
     
-    let sipManager:SipManagerProtocol
+    let sipManager: SipManagerProtocol
     
     init() {
-        sipManager = SipManager(sipSdkManager: LinphoneManager())
-        sipManager.registrationDelegate = self
-        sipManager.sessionDelegate = self
+        sipManager = LinphoneManager()
     }
     
-    init(sipManager:SipManagerProtocol) {
-        self.sipManager = sipManager
-        sipManager.registrationDelegate = self
-        sipManager.sessionDelegate = self
-    }
-
     public func initialize(config: Config) {
         sipManager.initialize(config: config)
     }
@@ -62,7 +47,9 @@ public class PhoneLib {
     /// This `registers` your user on SIP. You need this before placing a call.
     /// - Returns: Bool containing register result
     public func register() -> Bool {
-        sipManager.register()
+        sipManager.register { state in
+            
+        }
     }
 
     public func destroy() {
@@ -213,36 +200,4 @@ extension PhoneLib: RegistrationStateDelegate {
     public func didChangeRegisterState(_ state: SipRegistrationStatus, message:String?) {
         registrationDelegate?.didChangeRegisterState(state, message: message)
     }
-}
-
-extension PhoneLib: CallDelegate {
-    public func sessionUpdated(_ session: Session, message: String) {
-        sessionDelegate?.sessionUpdated(session, message: message)
-    }
-    
-    public func didReceive(incomingSession: Session) {
-        sessionDelegate?.didReceive(incomingSession: incomingSession)
-    }
-    
-    public func outgoingDidInitialize(session: Session) {
-        sessionDelegate?.outgoingDidInitialize(session: session)
-    }
-    
-    public func sessionConnected(_ session: Session) {
-        sessionDelegate?.sessionConnected(session)
-    }
-    
-    public func sessionEnded(_ session: Session) {
-        sessionDelegate?.sessionEnded(session)
-    }
-    
-    public func sessionReleased(_ session: Session) {
-        sessionDelegate?.sessionReleased(session)
-    }
-    
-    public func error(session:Session, message: String) {
-        sessionDelegate?.error(session: session, message: message)
-    }
-    
-    
 }
