@@ -11,12 +11,9 @@ import AVFoundation
 
 //CallKit: https://wiki.linphone.org/xwiki/wiki/public/view/Lib/Getting%20started/iOS/#HCallKitIntegration
 
-class LinphoneManager:SipSdkProtocol {
+class LinphoneManager: SipManagerProtocol {
     
-    weak var sessionDelegate:SipSDKDelegate?
-    weak var registrationDelegate:RegistrationStateDelegate?
-
-    private var config: Config?
+    var config: Config?
     var isInitialized: Bool = false
     var isRegistered: Bool = false
 
@@ -84,11 +81,7 @@ class LinphoneManager:SipSdkProtocol {
             }
         }
     }
-    
-    fileprivate func findSession(for call:Call) -> Session? {
-        return sessionDelegate?.getActiveSessions().first(where: { $0.call.remoteAddress != nil && $0.call.remoteAddress?.asString() == call.remoteAddress?.asString() })
-    }
-    
+        
     private func setupProxy(from:Address, encrypted:Bool) throws {
         // configure proxy entries
         proxyConfig = try lc.createProxyConfig()
@@ -104,13 +97,15 @@ class LinphoneManager:SipSdkProtocol {
     }
     
     //MARK: - SipSdkProtocol
-    func register() -> Bool {
+    func register(callback: @escaping RegistrationCallback) -> Bool {
         let factory = Factory.Instance
         do {
             guard let config = self.config else {
                 throw InitializationError.noConfigurationProvided
             }
             
+            lc.addDelegate(delegate: RegistrationListener(linphoneManager: self, core: lc, callback: callback))
+
             let identity = "sip:" + config.auth.name + "@" + config.auth.domain + ":\(config.auth.port)"
             let from = try factory.createAddress(addr: identity)
             try from.setTransport(newValue: config.encryption ? .Tls : .Udp)
@@ -162,7 +157,7 @@ class LinphoneManager:SipSdkProtocol {
 
             self.isRegistered = false
             
-            while(self.lc.proxyConfigList.contains(where: { $0.state != RegistrationState.Cleared } )) {
+            while(self.lc.proxyConfigList.contains(where: { $0.state != linphonesw.RegistrationState.Cleared } )) {
                 self.lc.iterate() // to make sure we receive call backs before shutting down
                 usleep(50000)
             }
@@ -334,28 +329,9 @@ class LinphoneStateManager:CoreDelegate {
         linphoneManager = manager
     }
     
-    override func onRegistrationStateChanged(lc: Core, cfg: ProxyConfig, cstate: RegistrationState, message: String?) {
-        print("onRegistrationStateChanged: \(cfg.transport); Mes: \(message ?? "")")
-        guard let newState = SipRegistrationStatus(rawValue: cstate.rawValue) else { return }
-
-        if newState == SipRegistrationStatus.registered {
-            linphoneManager.isRegistered = true
-        } else if newState == SipRegistrationStatus.failed {
-            linphoneManager.isRegistered = false
-        }
-
-        if newState != linphoneManager.sipRegistrationStatus {
-            linphoneManager.sipRegistrationStatus = newState
-            DispatchQueue.main.async {
-                self.linphoneManager.registrationDelegate?.didChangeRegisterState(newState, message: message)
-            }
-        }
-    }
-    
     override func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
         print("OnCallStateChanged, state:\(cstate) with message:\(message).")
-        
-                
+
         if cstate == .IncomingReceived || cstate == .OutgoingInit {
             guard let session = Session(call: call) else {
                 try? call.terminate()
@@ -365,34 +341,70 @@ class LinphoneStateManager:CoreDelegate {
             session.state = SessionState(rawValue: cstate.rawValue) ?? .idle
             DispatchQueue.main.async {
                 if session.state == .outgoingDidInitialize {
-                    self.linphoneManager.sessionDelegate?.outgoingDidInitialize(session: session)
+                    self.linphoneManager.config?.callDelegate.outgoingDidInitialize(session: session)
                 } else {
-                    self.linphoneManager.sessionDelegate?.didReceive(incomingSession: session)
+                    self.linphoneManager.config?.callDelegate.didReceive(incomingSession: session)
                 }
                 
             }
             return
         }
         
-        guard let session = linphoneManager.findSession(for: call) else { return }
+        guard let session = Session(call: call) else {
+            print("Unable to create session, no remote address")
+            return
+        }
         session.updateInfo(call: call)
-        
+                
         session.state = SessionState(rawValue: cstate.rawValue) ?? .idle
         DispatchQueue.main.async {
-            let delegate = self.linphoneManager.sessionDelegate
+            guard let delegate = self.linphoneManager.config?.callDelegate else {
+                print("Unable to send events as no call delegate")
+                return
+            }
             switch cstate {
             case .Connected:
-                delegate?.sessionConnected(session)
+                delegate.sessionConnected(session)
             case .End:
-                delegate?.sessionEnded(session)
+                delegate.sessionEnded(session)
             case .Released:
-                delegate?.sessionReleased(session)
+                delegate.sessionReleased(session)
             case .Error: // The call encountered an error
-                delegate?.error(session: session, message: message)
+                delegate.error(session: session, message: message)
             default:
-                delegate?.sessionUpdated(session, message: message)
+                delegate.sessionUpdated(session, message: message)
                 print("Default call state: \(cstate)")
             }
+        }
+    }
+}
+
+class RegistrationListener : CoreDelegate {
+    private let core: Core
+    private let callback: RegistrationCallback
+    private let linphoneManager: LinphoneManager
+    
+    init(linphoneManager: LinphoneManager, core: Core, callback: @escaping RegistrationCallback) {
+        self.linphoneManager = linphoneManager
+        self.callback = callback
+        self.core = core
+    }
+
+    override func onRegistrationStateChanged(lc: Core, cfg: ProxyConfig, cstate: linphonesw.RegistrationState, message: String) {
+        switch cstate {
+            case .Failed:
+                linphoneManager.isRegistered = false
+                callback(.failed)
+            case .Ok:
+                linphoneManager.isRegistered = true
+                callback(.registered)
+            case .Cleared: callback(.cleared)
+            case .None: callback(.none)
+            case .Progress: callback(.progress)
+        }
+
+        if cstate == linphonesw.RegistrationState.Ok || cstate == linphonesw.RegistrationState.Failed {
+            core.removeDelegate(delegate: self)
         }
     }
 }
