@@ -5,8 +5,8 @@
 import Foundation
 
 public struct Auth {
-    let name: String
-    let password: String
-    let domain: String
-    let port: Int
+    public let name: String
+    public let password: String
+    public let domain: String
+    public let port: Int
 }

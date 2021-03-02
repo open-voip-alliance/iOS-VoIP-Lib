@@ -47,6 +47,10 @@ class LinphoneManager: SipManagerProtocol {
         return startLinphone()
     }
 
+    func initialize(config: Config) {
+        self.config = config
+    }
+
     func startLinphone() -> Bool {
         isInitialized = true
 

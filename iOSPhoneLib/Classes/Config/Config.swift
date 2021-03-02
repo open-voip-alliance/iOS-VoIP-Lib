@@ -5,11 +5,11 @@
 import Foundation
 
 public struct Config {
-    let auth: Auth
-    let callDelegate: CallDelegate
-    let encryption: Bool = true
-    let stun: String? = nil
-    let ring: String? = nil
-    let codecs: [Codec] = [Codec.OPUS]
-    let userAgent: String = "iOSPhoneLib"
+    public let auth: Auth
+    public let callDelegate: CallDelegate
+    public let encryption: Bool = true
+    public let stun: String? = nil
+    public let ring: String? = nil
+    public let codecs: [Codec] = [Codec.OPUS]
+    public let userAgent: String = "iOSPhoneLib"
 }

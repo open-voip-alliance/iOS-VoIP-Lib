@@ -43,13 +43,15 @@ public class PhoneLib {
     public func initialize(config: Config) {
         sipManager.initialize(config: config)
     }
+
+    public func swapConfig(config: Config) {
+        sipManager.swapConfig(config: config)
+    }
     
     /// This `registers` your user on SIP. You need this before placing a call.
     /// - Returns: Bool containing register result
-    public func register() -> Bool {
-        sipManager.register { state in
-            
-        }
+    public func register(callback: @escaping RegistrationCallback) -> Bool {
+        sipManager.register(callback: callback)
     }
 
     public func destroy() {
