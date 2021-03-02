@@ -31,23 +31,28 @@ class LinphoneManager: SipManagerProtocol {
     var isSpeakerOn: Bool {
         AVAudioSession.sharedInstance().currentRoute.outputs.contains(where: { $0.portType == AVAudioSessionPortBuiltInSpeaker })
     }
-    
-    init() {
-        lc = try! Factory.Instance.createCore(configPath: "", factoryConfigPath: "", systemContext: nil)
-        stateManager = LinphoneStateManager(manager: self)
-    }
 
     func initialize(config: Config) -> Bool {
         self.config = config
-        guard !isInitialized else {
+
+        if isInitialized {
             debugPrint("Linphone already init")
             return true
         }
+
         debugPrint("Linphone init")
+
+        lc = try! Factory.Instance.createCore(configPath: "", factoryConfigPath: "", systemContext: nil)
+        stateManager = LinphoneStateManager(manager: self)
+
         return startLinphone()
     }
 
     func initialize(config: Config) {
+        self.config = config
+    }
+
+    func swapConfig(config: Config) {
         self.config = config
     }
 
@@ -65,7 +70,20 @@ class LinphoneManager: SipManagerProtocol {
         lc.adaptiveRateControlEnabled = true
         lc.echoCancellationEnabled = true
         lc.callkitEnabled = true
-        
+        lc.setUserAgent(uaName: config?.userAgent ?? "", version: "")
+
+        if let codecs = config?.codecs {
+            setAudioCodecs(codecs)
+        }
+
+        if let stun = config?.stun {
+            lc.natPolicy?.stunEnabled = true
+            lc.natPolicy?.stunServer = stun
+            lc.natPolicy?.resolveStunServer()
+        } else {
+            lc.natPolicy?.clear()
+        }
+
         try? lc.migrateToMultiTransport()
         
         do {
@@ -201,7 +219,7 @@ class LinphoneManager: SipManagerProtocol {
         }
     }
     
-    internal func setAudioCodecs(_ codecs: [Codec]) {
+    private func setAudioCodecs(_ codecs: [Codec]) {
         var disabledPayloads = lc.audioPayloadTypes
 
         for codec in Codec.allCases {
@@ -216,7 +234,7 @@ class LinphoneManager: SipManagerProtocol {
         })
     }
     
-    func resetAudioCodecs() {
+    private func resetAudioCodecs() {
         setAudioCodecs(Codec.allCases)
     }
     
@@ -226,8 +244,8 @@ class LinphoneManager: SipManagerProtocol {
     
     func setSpeaker(_ speaker: Bool) -> Bool {
         do {
-//            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .voiceChat)
-//            try AVAudioSession.sharedInstance().setMode(AVAudioSession.Mode.voiceChat)
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, mode: AVAudioSessionModeVoiceChat)
+            try AVAudioSession.sharedInstance().setMode(AVAudioSessionModeVoiceChat)
             try AVAudioSession.sharedInstance().overrideOutputAudioPort(speaker ? .speaker : .none)
             try AVAudioSession.sharedInstance().setActive(true)
             print("AVAudioSession Category playAndRecord OK")
@@ -304,24 +322,6 @@ class LinphoneManager: SipManagerProtocol {
                 print("Sending dtmfs failed: \(error)")
             }
         }
-    }
-    
-    func setUserAgent(_ userAgent:String, version:String?) {
-        lc.setUserAgent(uaName: userAgent, version: version ?? "")
-    }
-    
-    func setStun(enabled:Bool, server:String?, stunServerUserName:String?) {
-        if !enabled {
-            lc.natPolicy?.clear()
-            return
-        }
-        guard let server = server, let user = stunServerUserName else {
-            return
-        }
-        lc.natPolicy?.stunEnabled = enabled
-        lc.natPolicy?.stunServer = server
-        lc.natPolicy?.stunServerUsername = user
-        lc.natPolicy?.resolveStunServer()
     }
 }
 

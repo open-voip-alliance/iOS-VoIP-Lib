@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias RegistrationCallback = (RegistrationState) -> Void
+public typealias RegistrationCallback = (RegistrationState) -> Void
 
 protocol SipManagerProtocol: AnyObject {    
     var isMicrophoneMuted:Bool { get }
@@ -22,22 +22,17 @@ protocol SipManagerProtocol: AnyObject {
     func call(to number: String) -> Session?
     func acceptCall(for session: Session) -> Bool
     func endCall(for session: Session) -> Bool
-    
-    func setAudioCodecs(_ codecs:[Codec])
-    func resetAudioCodecs()
-    
+
     func setMicrophone(muted:Bool)
     func setSpeaker(_ speaker:Bool) -> Bool
     func setAudio(enabled:Bool)
     
     func setHold(session:Session, onHold hold:Bool) -> Bool
     func transfer(session: Session, to number: String) -> Bool
-    
+
+    func swapConfig(config: Config)
     func beginAttendedTransfer(session: Session, to number:String) -> AttendedTransferSession?
     func finishAttendedTransfer(attendedTransferSession: AttendedTransferSession) -> Bool
     
     func sendDtmf(session:Session, dtmf: String)
-    
-    func setUserAgent(_ userAgent:String, version:String?)
-    func setStun(enabled:Bool, server:String?, stunServerUserName:String?)
 }
