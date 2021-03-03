@@ -29,7 +29,7 @@ class LinphoneManager: SipManagerProtocol {
     }
     
     var isSpeakerOn: Bool {
-        AVAudioSession.sharedInstance().currentRoute.outputs.contains(where: { $0.portType == AVAudioSessionPortBuiltInSpeaker })
+        AVAudioSession.sharedInstance().currentRoute.outputs.contains(where: { $0.portType == AVAudioSession.Port.builtInSpeaker })
     }
 
     func initialize(config: Config) -> Bool {
@@ -244,8 +244,8 @@ class LinphoneManager: SipManagerProtocol {
     
     func setSpeaker(_ speaker: Bool) -> Bool {
         do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, mode: AVAudioSessionModeVoiceChat)
-            try AVAudioSession.sharedInstance().setMode(AVAudioSessionModeVoiceChat)
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playAndRecord, mode: AVAudioSession.Mode.voiceChat)
+            try AVAudioSession.sharedInstance().setMode(AVAudioSession.Mode.voiceChat)
             try AVAudioSession.sharedInstance().overrideOutputAudioPort(speaker ? .speaker : .none)
             try AVAudioSession.sharedInstance().setActive(true)
             print("AVAudioSession Category playAndRecord OK")
