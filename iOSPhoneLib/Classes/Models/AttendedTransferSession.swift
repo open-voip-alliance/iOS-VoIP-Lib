@@ -8,6 +8,6 @@
 import Foundation
 
 public struct AttendedTransferSession{
-    public var from: Session
-    public var to: Session
+    public var from: Call
+    public var to: Call
 }

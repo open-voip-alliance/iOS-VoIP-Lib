@@ -1,5 +1,5 @@
 //
-//  SessionState.swift
+//  CallState.swift
 //  PhoneLib
 //
 //  Created by Fabian Giger on 02/07/2020.
@@ -8,7 +8,7 @@
 import Foundation
 
 ///LinphoneCallState enum represents the different states a call can reach into.
-public enum SessionState:Int {
+public enum CallState:Int {
     /// Initial state.
     case idle = 0
     /// Incoming call received.

@@ -9,6 +9,8 @@ import Foundation
 import linphonesw
 import AVFoundation
 
+typealias LinphoneCall = linphonesw.Call
+
 //CallKit: https://wiki.linphone.org/xwiki/wiki/public/view/Lib/Getting%20started/iOS/#HCallKitIntegration
 
 class LinphoneManager: SipManagerProtocol {
@@ -195,24 +197,24 @@ class LinphoneManager: SipManagerProtocol {
         print("Linphone unregistered")
     }
     
-    func call(to number: String) -> Session? {
-        guard let call = lc.invite(url: number) else {return nil}
-        let session = Session.init(call: call)
-        return isInitialized ? session : nil
+    func call(to number: String) -> Call? {
+        guard let linphoneCall = lc.invite(url: number) else {return nil}
+        let call = Call.init(linphoneCall: linphoneCall)
+        return isInitialized ? call : nil
     }
     
-    func acceptCall(for session: Session) -> Bool {
+    func acceptCall(for call: Call) -> Bool {
         do {
-            try session.call.accept()
+            try call.linphoneCall.accept()
             return true
         } catch {
             return false
         }
     }
     
-    func endCall(for session: Session) -> Bool {
+    func endCall(for call: Call) -> Bool {
         do {
-            try session.call.terminate()
+            try call.linphoneCall.terminate()
             return true
         } catch {
             return false
@@ -261,14 +263,14 @@ class LinphoneManager: SipManagerProtocol {
         lc.activateAudioSession(actived: enabled)
     }
     
-    func setHold(session:Session, onHold hold:Bool) -> Bool {
+    func setHold(call:Call, onHold hold:Bool) -> Bool {
         do {
             if hold {
-                print("Pausing session.")
-                try session.pause()
+                print("Pausing call.")
+                try call.pause()
             } else {
-                print("Resuming session.")
-                try session.resume()
+                print("Resuming call.")
+                try call.resume()
             }
             return true
         } catch {
@@ -276,9 +278,9 @@ class LinphoneManager: SipManagerProtocol {
         }
     }
     
-    func transfer(session: Session, to number: String) -> Bool {
+    func transfer(call: Call, to number: String) -> Bool {
         do {
-            try session.call.transfer(referTo: number)
+            try call.linphoneCall.transfer(referTo: number)
             print("Transfer was successful")
             return true
         } catch (let error) {
@@ -287,18 +289,18 @@ class LinphoneManager: SipManagerProtocol {
         }
     }
     
-    func beginAttendedTransfer(session: Session, to number:String) -> AttendedTransferSession? {        
-        guard let destinationSession = call(to: number) else {
-            print("Unable to make call for target session")
+    func beginAttendedTransfer(call: Call, to number:String) -> AttendedTransferSession? {
+        guard let destinationCall = self.call(to: number) else {
+            print("Unable to make call for target call")
             return nil
         }
         
-        return AttendedTransferSession(from: session, to: destinationSession)
+        return AttendedTransferSession(from: call, to: destinationCall)
     }
     
     func finishAttendedTransfer(attendedTransferSession: AttendedTransferSession) -> Bool {
         do {
-            try attendedTransferSession.from.call.transferToAnother(dest: attendedTransferSession.to.call)
+            try attendedTransferSession.from.linphoneCall.transferToAnother(dest: attendedTransferSession.to.linphoneCall)
             print("Transfer was successful")
             return true
         } catch (let error) {
@@ -307,17 +309,17 @@ class LinphoneManager: SipManagerProtocol {
         }
     }
     
-    func sendDtmf(session:Session, dtmf: String) {
+    func sendDtmf(call:Call, dtmf: String) {
         if dtmf.count == 1 {
             do {
                 let dtmfDigit = dtmf.utf8CString[0]
-                try session.call.sendDtmf(dtmf: dtmfDigit)
+                try call.linphoneCall.sendDtmf(dtmf: dtmfDigit)
             } catch (let error) {
                 print("Sending dtmf failed: \(error)")
             }
         } else {
             do {
-                try session.call.sendDtmfs(dtmfs: dtmf)
+                try call.linphoneCall.sendDtmfs(dtmfs: dtmf)
             } catch (let error) {
                 print("Sending dtmfs failed: \(error)")
             }
@@ -333,34 +335,34 @@ class LinphoneStateManager:CoreDelegate {
         linphoneManager = manager
     }
     
-    override func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
+    override func onCallStateChanged(lc: Core, call: LinphoneCall, cstate: LinphoneCall.State, message: String) { //wip change this call to linphoneCall
         print("OnCallStateChanged, state:\(cstate) with message:\(message).")
 
         if cstate == .IncomingReceived || cstate == .OutgoingInit {
-            guard let session = Session(call: call) else {
+            guard let phoneLibCall = Call(linphoneCall: call) else {
                 try? call.terminate()
                 print("Call terminated because remoteAddress was nil.")
                 return
             }
-            session.state = SessionState(rawValue: cstate.rawValue) ?? .idle
+            phoneLibCall.state = CallState(rawValue: cstate.rawValue) ?? .idle
             DispatchQueue.main.async {
-                if session.state == .outgoingDidInitialize {
-                    self.linphoneManager.config?.callDelegate.outgoingDidInitialize(session: session)
+                if phoneLibCall.state == .outgoingDidInitialize {
+                    self.linphoneManager.config?.callDelegate.outgoingDidInitialize(call: phoneLibCall)
                 } else {
-                    self.linphoneManager.config?.callDelegate.didReceive(incomingSession: session)
+                    self.linphoneManager.config?.callDelegate.didReceive(incomingCall: phoneLibCall)
                 }
                 
             }
             return
         }
         
-        guard let session = Session(call: call) else {
-            print("Unable to create session, no remote address")
+        guard let phoneLibCall = Call(linphoneCall: call) else {
+            print("Unable to create call, no remote address")
             return
         }
-        session.updateInfo(call: call)
+        phoneLibCall.updateInfo(linphoneCall: call)
                 
-        session.state = SessionState(rawValue: cstate.rawValue) ?? .idle
+        phoneLibCall.state = CallState(rawValue: cstate.rawValue) ?? .idle
         DispatchQueue.main.async {
             guard let delegate = self.linphoneManager.config?.callDelegate else {
                 print("Unable to send events as no call delegate")
@@ -368,15 +370,15 @@ class LinphoneStateManager:CoreDelegate {
             }
             switch cstate {
             case .Connected:
-                delegate.sessionConnected(session)
+                delegate.callConnected(phoneLibCall)
             case .End:
-                delegate.sessionEnded(session)
+                delegate.callEnded(phoneLibCall)
             case .Released:
-                delegate.sessionReleased(session)
+                delegate.callReleased(phoneLibCall)
             case .Error: // The call encountered an error
-                delegate.error(session: session, message: message)
+                delegate.error(call: phoneLibCall, message: message)
             default:
-                delegate.sessionUpdated(session, message: message)
+                delegate.callUpdated(phoneLibCall, message: message)
                 print("Default call state: \(cstate)")
             }
         }

@@ -1,22 +1,21 @@
 //
-//  Session.swift
+//  Call.swift
 //  Pods-SpindleSIPFramework_Example
 //
-//  Created by Fabian Giger on 14/04/2020.
-//
+
 
 import Foundation
 import linphonesw
 
-public class Session:NSObject {
-    public let sessionId = UUID()
-    let call: Call
+public class Call:NSObject {
+    public let callId = UUID()
+    let linphoneCall: LinphoneCall
     
     public var remoteNumber:String
     public var displayName:String?
     public var remoteEnvironment:String?
     
-    public var state:SessionState = .idle {
+    public var state:CallState = .idle {
         didSet {
             if state == .connected && startDate == nil {
                 startDate = Date()
@@ -25,61 +24,61 @@ public class Session:NSObject {
     }
     
     public var durationInSec:Int? {
-        call.duration
+        linphoneCall.duration
     }
     
     public var isIncoming:Bool {
-        return call.dir == .Incoming
+        return linphoneCall.dir == .Incoming
     }
     
-    public var direction: SessionDirection {
-        return call.dir == .Incoming ? .inbound : .outbound
+    public var direction: Direction {
+        return linphoneCall.dir == .Incoming ? .inbound : .outbound
     }
     
     private(set) var startDate:Date?
     
-    init?(call: Call) {
-        guard let address = call.remoteAddress else { return nil }
-        self.call = call
+    init?(linphoneCall: LinphoneCall) {
+        guard let address = linphoneCall.remoteAddress else { return nil }
+        self.linphoneCall = linphoneCall
         displayName = address.displayName
         remoteEnvironment = address.domain
         remoteNumber = address.username
     }
     
-    init(call: Call, number:String) {
-        self.call = call
+    init(linphoneCall: LinphoneCall, number:String) {
+        self.linphoneCall = linphoneCall
         self.remoteNumber = number
         super.init()
-        updateInfo(call: call)
+        updateInfo(linphoneCall: linphoneCall)
     }
     
     /// Resumes a call.
     /// The call needs to have been paused previously with `pause()`
     public func resume() throws {
-        try call.resume()
+        try linphoneCall.resume()
     }
     
     /// Pauses the call.
     /// be played to the remote user. The only way to resume a paused call is to call `resume()`
     public func pause() throws {
-        try call.pause()
+        try linphoneCall.pause()
     }
     
     public func getAverageRating() -> Float{
-        return call.averageQuality
+        return linphoneCall.averageQuality
     }
     
-    func updateInfo(call:Call) {
-        displayName = call.remoteAddress?.displayName
-        remoteEnvironment = call.remoteAddress?.domain
-        if let user = call.remoteAddress?.username {
+    func updateInfo(linphoneCall:LinphoneCall) {
+        displayName = linphoneCall.remoteAddress?.displayName
+        remoteEnvironment = linphoneCall.remoteAddress?.domain
+        if let user = linphoneCall.remoteAddress?.username {
             remoteNumber = user
         }
     }
 }
 
-extension Session{
-    public static func == (lhs: Session, rhs: Session) -> Bool {
-      return lhs.sessionId == rhs.sessionId
+extension Call{
+    public static func == (lhs: Call, rhs: Call) -> Bool {
+      return lhs.callId == rhs.callId
     }
 }

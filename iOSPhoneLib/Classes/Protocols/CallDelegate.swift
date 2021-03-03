@@ -1,5 +1,5 @@
 //
-//  SessionDelegate.swift
+//  CallDelegate.swift
 //  PhoneLib
 //
 //  Created by Fabian Giger on 02/07/2020.
@@ -11,44 +11,44 @@ public protocol CallDelegate: AnyObject {
     /// Callback when there's a new incoming call
     ///
     /// - Parameters:
-    ///     - incomingSession: The incoming session
-    func didReceive(incomingSession: Session)
+    ///     - incomingCall: The incoming call
+    func didReceive(incomingCall: Call)
     
-    /// Callback when there's a new outgoing session.
+    /// Callback when there's a new outgoing call.
     ///
     /// - Parameters:
-    ///     - session: The session
-    func outgoingDidInitialize(session: Session)
+    ///     - call: The call
+    func outgoingDidInitialize(call: Call)
     
-    /// Callback when a session has been updated. This is more generic callback. It's only used when there not a state specific callback.
+    /// Callback when a call has been updated. This is more generic callback. It's only used when there not a state specific callback.
     ///
     /// - Parameters:
-    ///     - session: The session
+    ///     - call: The call
     ///     - message: The message from the server.
-    func sessionUpdated(_ session: Session, message: String)
+    func callUpdated(_ call: Call, message: String)
     
-    /// Callback when a session is connected.
+    /// Callback when a call is connected.
     ///
     /// - Parameters:
-    ///     - session: The session
-    func sessionConnected(_ session: Session)
+    ///     - call: The call
+    func callConnected(_ call: Call)
     
-    /// Callback when a session ended.
+    /// Callback when a call ended.
     ///
     /// - Parameters:
-    ///     - session: The session
-    func sessionEnded(_ session: Session)
+    ///     - call: The call
+    func callEnded(_ call: Call)
     
-    /// Callback when a session released.
+    /// Callback when a call released.
     ///
     /// - Parameters:
-    ///     - session: The session
-    func sessionReleased(_ session: Session)
+    ///     - call: The call
+    func callReleased(_ call: Call)
     
     /// Callback when there's an error.
     ///
     /// - Parameters:
-    ///     - session: The session
+    ///     - call: The call
     ///     - message: The message from the server.
-    func error(session:Session, message: String)
+    func error(call:Call, message: String)
 }
