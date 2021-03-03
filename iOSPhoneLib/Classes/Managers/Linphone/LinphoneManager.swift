@@ -30,7 +30,6 @@ class LinphoneManager: SipManagerProtocol {
     
     var isSpeakerOn: Bool {
         AVAudioSession.sharedInstance().currentRoute.outputs.contains(where: { $0.portType == AVAudioSession.Port.builtInSpeaker })
-    }
 
     func initialize(config: Config) -> Bool {
         self.config = config
@@ -46,10 +45,6 @@ class LinphoneManager: SipManagerProtocol {
         stateManager = LinphoneStateManager(manager: self)
 
         return startLinphone()
-    }
-
-    func initialize(config: Config) {
-        self.config = config
     }
 
     func swapConfig(config: Config) {

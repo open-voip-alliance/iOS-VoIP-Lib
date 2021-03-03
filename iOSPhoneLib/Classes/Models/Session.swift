@@ -28,6 +28,14 @@ public class Session:NSObject {
         call.duration
     }
     
+    public var isIncoming:Bool {
+        return call.dir == .Incoming
+    }
+    
+    public var direction: SessionDirection {
+        return call.dir == .Incoming ? .inbound : .outbound
+    }
+    
     private(set) var startDate:Date?
     
     init?(call: Call) {

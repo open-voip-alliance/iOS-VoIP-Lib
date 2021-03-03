@@ -30,7 +30,7 @@ public class PhoneLib {
     }
     
     public func initialize(config: Config) {
-        sipManager.initialize(config: config)
+        _ = sipManager.initialize(config: config)
     }
 
     public func refreshConfig(config: Config) {
