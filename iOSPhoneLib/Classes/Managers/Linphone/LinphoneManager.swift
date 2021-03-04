@@ -120,6 +120,8 @@ class LinphoneManager: SipManagerProtocol {
         lc.defaultProxyConfig = proxyConfig // set to default proxy
     }
     
+    var registrationListener: RegistrationListener?
+    
     //MARK: - SipSdkProtocol
     func register(callback: @escaping RegistrationCallback) -> Bool {
         let factory = Factory.Instance
@@ -128,7 +130,9 @@ class LinphoneManager: SipManagerProtocol {
                 throw InitializationError.noConfigurationProvided
             }
             
-            lc.addDelegate(delegate: RegistrationListener(linphoneManager: self, core: lc, callback: callback))
+            self.registrationListener = RegistrationListener(linphoneManager: self, core: lc, callback: callback)
+            
+            lc.addDelegate(delegate: self.registrationListener!)
 
             let identity = "sip:" + config.auth.name + "@" + config.auth.domain + ":\(config.auth.port)"
             let from = try factory.createAddress(addr: identity)
