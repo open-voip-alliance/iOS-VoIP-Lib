@@ -5,7 +5,7 @@
 import Foundation
 
 public struct Config {
-    internal init(auth: Auth, callDelegate: CallDelegate, encryption: Bool = true, stun: String? = nil, ring: String? = nil, codecs: [Codec] = [Codec.OPUS], userAgent: String = "iOSPhoneLib") {
+    public init(auth: Auth, callDelegate: CallDelegate, encryption: Bool = true, stun: String? = nil, ring: String? = nil, codecs: [Codec] = [Codec.OPUS], userAgent: String = "iOSPhoneLib") {
         self.auth = auth
         self.callDelegate = callDelegate
         self.encryption = encryption
