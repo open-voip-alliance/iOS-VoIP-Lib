@@ -10,9 +10,9 @@ import Foundation
 public class Actions {
     
     let sipManager: SipManagerProtocol
-    let call: Session
+    let call: Call
     
-    init(sipManager: SipManagerProtocol, call: Session) {
+    init(sipManager: SipManagerProtocol, call: Call) {
         self.sipManager = sipManager
         self.call = call
     }
@@ -20,7 +20,7 @@ public class Actions {
     /// Accept an incoming call
     ///
     /// - Parameters:
-    ///     - session: The accepting session
+    ///     - call: The accepting call
     /// - Returns: `Bool` Whether accepting went successfully
     public func accept() -> Bool {
         sipManager.acceptCall(for: call)
@@ -29,14 +29,14 @@ public class Actions {
     /// End an call.
     ///
     /// - Parameters:
-    ///     - session: The accepting session
+    ///     - call: The accepting call
     /// - Returns: `Bool` Whether ending went successfully
     public func end() -> Bool {
         sipManager.endCall(for: call)
     }
     
     /// Turn on/off the speaker.
-    /// This function uses AVAudioSession to override the `Output Audio Port`. It also sets the `category` to `PlayAndRecord` and `mode` to `VoiceChat`.
+    /// This function uses AVAudioCall to override the `Output Audio Port`. It also sets the `category` to `PlayAndRecord` and `mode` to `VoiceChat`.
     ///
     /// - Parameters:
     ///     - speaker: The new state of the speaker.
@@ -45,7 +45,7 @@ public class Actions {
         return sipManager.setSpeaker(speaker)
     }
     
-    /// Enable/disable the audio session.
+    /// Enable/disable the audio call.
     /// This is a `CallKit` support function. Which must be called by the `CXProviderDelegate` on `didActivate` and `didDeactivate`.
     ///
     /// - Parameters:
@@ -54,40 +54,40 @@ public class Actions {
         sipManager.setAudio(enabled: enabled)
     }
     
-    /// Set a session on (un)hold
+    /// Set a call on (un)hold
     ///
     /// - Parameters:
-    ///     - session: The session
+    ///     - call: The call
     ///     - onHold: The new hold state
     /// - Returns: `Bool` Whether the change was successful.
     public func hold(onHold hold:Bool) -> Bool {
-        sipManager.setHold(session: call, onHold: hold)
+        sipManager.setHold(call: call, onHold: hold)
     }
     
     /// Transfer a call. This is unattended.
     ///
     /// - Parameters:
-    ///     - session: The active session
+    ///     - call: The active call
     ///     - number: Transfer to number
     /// - Returns: `Bool` Whether the transfer was successful.
     public func transfer(to number:String) -> Bool {
-        sipManager.transfer(session: call, to: number)
+        sipManager.transfer(call: call, to: number)
     }
     
     /// Begin process of attended transfer by calling the transfer target's number.
     ///
     /// - Parameters:
-    ///     - session: The active session
+    ///     - call: The active call
     ///     - number: The transfer target's number
-    /// - Returns: `AttendedTransferSession` The struct with the two sessions.
+    /// - Returns: `AttendedTransferCall` The struct with the two calls.
     public func beginAttendedTransfer(to number:String) -> AttendedTransferSession? {
-        sipManager.beginAttendedTransfer(session: call, to:number)
+        sipManager.beginAttendedTransfer(call: call, to:number)
     }
     
     /// Finish process of attended transfer by merging the calls.
     ///
     /// - Parameter:
-    ///     - attendedTransferSession: The struct with the two sessions.
+    ///     - attendedTransferCall: The struct with the two calls.
     /// - Returns: `Bool` Whether the transfer was successful.
     public func finishAttendedTransfer(attendedTransferSession:AttendedTransferSession) -> Bool {
         sipManager.finishAttendedTransfer(attendedTransferSession:attendedTransferSession)
@@ -96,9 +96,9 @@ public class Actions {
     /// Send Dtmf.
     ///
     /// - Parameter:
-    ///     - session: The session with the active call.
+    ///     - call: The call with the active call.
     ///     - dtmf: The string with the dtmf digits.
     public func sendDtmf(dtmf: String) {
-        sipManager.sendDtmf(session: call, dtmf: dtmf)
+        sipManager.sendDtmf(call: call, dtmf: dtmf)
     }
 }

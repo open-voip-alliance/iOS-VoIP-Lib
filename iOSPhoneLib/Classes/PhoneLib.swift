@@ -64,8 +64,8 @@ public class PhoneLib {
     ///
     /// - Parameters:
     ///     - number: The phone number to call
-    /// - Returns: `Session?`  The session or nil if the call has not been successful
-    public func call(to number: String) -> Session? {
+    /// - Returns: `Call?`  The call or nil if the call has not been successful
+    public func call(to number: String) -> Call? {
         sipManager.call(to: number)
     }
     
@@ -84,7 +84,7 @@ public class PhoneLib {
         sipManager.isSpeakerOn
     }
     
-    public func actions(session: Session) -> Actions {
-        Actions(sipManager: sipManager, call: session)
+    public func actions(call: Call) -> Actions {
+        Actions(sipManager: sipManager, call: call)
     }
 }

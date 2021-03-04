@@ -19,20 +19,20 @@ protocol SipManagerProtocol: AnyObject {
     func register(callback: @escaping RegistrationCallback) -> Bool
     func unregister(finished:@escaping() -> ())
     func destroy()
-    func call(to number: String) -> Session?
-    func acceptCall(for session: Session) -> Bool
-    func endCall(for session: Session) -> Bool
+    func call(to number: String) -> Call?
+    func acceptCall(for call: Call) -> Bool
+    func endCall(for call: Call) -> Bool
 
     func setMicrophone(muted:Bool)
     func setSpeaker(_ speaker:Bool) -> Bool
     func setAudio(enabled:Bool)
     
-    func setHold(session:Session, onHold hold:Bool) -> Bool
-    func transfer(session: Session, to number: String) -> Bool
+    func setHold(call:Call, onHold hold:Bool) -> Bool
+    func transfer(call: Call, to number: String) -> Bool
 
     func swapConfig(config: Config)
-    func beginAttendedTransfer(session: Session, to number:String) -> AttendedTransferSession?
+    func beginAttendedTransfer(call: Call, to number:String) -> AttendedTransferSession?
     func finishAttendedTransfer(attendedTransferSession: AttendedTransferSession) -> Bool
     
-    func sendDtmf(session:Session, dtmf: String)
+    func sendDtmf(call:Call, dtmf: String)
 }
