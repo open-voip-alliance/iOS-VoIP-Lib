@@ -5,6 +5,13 @@
 import Foundation
 
 public struct Auth {
+    internal init(name: String, password: String, domain: String, port: Int) {
+        self.name = name
+        self.password = password
+        self.domain = domain
+        self.port = port
+    }
+    
     public let name: String
     public let password: String
     public let domain: String
