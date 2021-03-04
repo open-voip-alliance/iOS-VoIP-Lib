@@ -5,7 +5,7 @@
 import Foundation
 
 public struct Auth {
-    internal init(name: String, password: String, domain: String, port: Int) {
+    public init(name: String, password: String, domain: String, port: Int) {
         self.name = name
         self.password = password
         self.domain = domain
