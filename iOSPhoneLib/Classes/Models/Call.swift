@@ -35,6 +35,10 @@ public class Call:NSObject {
         return linphoneCall.dir == .Incoming ? .inbound : .outbound
     }
     
+    public var quality: Quality {
+        return Quality(average: linphoneCall.averageQuality, current: linphoneCall.currentQuality)
+    }
+    
     private(set) var startDate:Date?
     
     init?(linphoneCall: LinphoneCall) {
@@ -62,10 +66,6 @@ public class Call:NSObject {
     /// be played to the remote user. The only way to resume a paused call is to call `resume()`
     public func pause() throws {
         try linphoneCall.pause()
-    }
-    
-    public func getAverageRating() -> Float{
-        return linphoneCall.averageQuality
     }
     
     func updateInfo(linphoneCall:LinphoneCall) {
