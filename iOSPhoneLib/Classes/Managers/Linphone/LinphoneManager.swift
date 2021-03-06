@@ -201,6 +201,14 @@ class LinphoneManager: SipManagerProtocol {
         print("Linphone unregistered")
     }
     
+    func terminateAllCalls() {
+        do {
+           try lc.terminateAllCalls()
+        } catch {
+            
+        }
+    }
+    
     func call(to number: String) -> Call? {
         guard let linphoneCall = lc.invite(url: number) else {return nil}
         let call = Call.init(linphoneCall: linphoneCall)

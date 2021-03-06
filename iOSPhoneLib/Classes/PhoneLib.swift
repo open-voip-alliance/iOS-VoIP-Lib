@@ -52,6 +52,10 @@ public class PhoneLib {
         sipManager.destroy()
     }
     
+    public func terminateAllCalls() {
+        sipManager.terminateAllCalls()
+    }
+    
     /// This `unregisters` your user on SIP.
     ///
     /// - Parameters:

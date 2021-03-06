@@ -22,7 +22,8 @@ protocol SipManagerProtocol: AnyObject {
     func call(to number: String) -> Call?
     func acceptCall(for call: Call) -> Bool
     func endCall(for call: Call) -> Bool
-
+    func terminateAllCalls()
+    
     func setMicrophone(muted:Bool)
     func setSpeaker(_ speaker:Bool) -> Bool
     func setAudio(enabled:Bool)
