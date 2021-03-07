@@ -71,7 +71,7 @@ class LinphoneManager: SipManagerProtocol {
         lc.addDelegate(delegate: stateManager)
         lc.adaptiveRateControlEnabled = true
         lc.echoCancellationEnabled = true
-        lc.callkitEnabled = true
+        lc.callkitEnabled = false
         lc.setUserAgent(uaName: config?.userAgent ?? "", version: "")
 
         if let codecs = config?.codecs {
@@ -356,7 +356,6 @@ class LinphoneStateManager:CoreDelegate {
                 print("Call terminated because remoteAddress was nil.")
                 return
             }
-            phoneLibCall.state = CallState(rawValue: cstate.rawValue) ?? .idle
             DispatchQueue.main.async {
                 if phoneLibCall.state == .outgoingDidInitialize {
                     self.linphoneManager.config?.callDelegate.outgoingDidInitialize(call: phoneLibCall)
@@ -374,7 +373,6 @@ class LinphoneStateManager:CoreDelegate {
         }
         phoneLibCall.updateInfo(linphoneCall: call)
                 
-        phoneLibCall.state = CallState(rawValue: cstate.rawValue) ?? .idle
         DispatchQueue.main.async {
             guard let delegate = self.linphoneManager.config?.callDelegate else {
                 print("Unable to send events as no call delegate")
