@@ -352,6 +352,8 @@ class LinphoneStateManager:CoreDelegate {
     override func onCallStateChanged(lc: Core, call: LinphoneCall, cstate: LinphoneCall.State, message: String) { //wip change this call to linphoneCall
         print("OnCallStateChanged, state:\(cstate) with message:\(message).")
 
+        preserveHeaders(call: call)
+        
         if cstate == .IncomingReceived || cstate == .OutgoingInit {
             guard let phoneLibCall = Call(linphoneCall: call) else {
                 try? call.terminate()
