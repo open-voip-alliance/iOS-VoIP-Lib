@@ -341,6 +341,8 @@ class LinphoneManager: SipManagerProtocol {
 
 class LinphoneStateManager:CoreDelegate {
     
+    private let headersToPreserve = ["Remote-Party-ID", "P-Asserted-Identity"]
+    
     let linphoneManager:LinphoneManager
     
     init(manager:LinphoneManager) {
@@ -391,6 +393,17 @@ class LinphoneStateManager:CoreDelegate {
                 delegate.callUpdated(phoneLibCall, message: message)
                 print("Default call state: \(cstate)")
             }
+        }
+    }
+    
+    /**
+            Some headers only appear in the initial invite, this will check for any headers we have flagged to be preserved
+     and retain them across all iterations of the LinphoneCall.
+     */
+    private func preserveHeaders(call: LinphoneCall) {
+        headersToPreserve.forEach { key in
+            let value = call.getToHeader(name: key)
+            call.params?.addCustomHeader(headerName: key, headerValue: value)
         }
     }
 }

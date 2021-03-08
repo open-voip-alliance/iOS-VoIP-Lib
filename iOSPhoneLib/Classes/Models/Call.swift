@@ -21,6 +21,18 @@ public class Call:NSObject {
         }
     }
     
+    public var remotePartyId: String {
+        get {
+            linphoneCall.params?.getCustomHeader(headerName: "Remote-Party-ID") ?? ""
+        }
+    }
+    
+    public var pAssertedIdentity: String {
+        get {
+            linphoneCall.params?.getCustomHeader(headerName: "P-Asserted-Identity") ?? ""
+        }
+    }
+    
     public var durationInSec:Int? {
         linphoneCall.duration
     }
