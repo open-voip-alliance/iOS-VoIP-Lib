@@ -11,7 +11,6 @@ public typealias RegistrationCallback = (RegistrationState) -> Void
 
 protocol SipManagerProtocol: AnyObject {    
     var isMicrophoneMuted:Bool { get }
-    var isSpeakerOn:Bool { get }
     var isRegistered:Bool {get}
     var isInitialized: Bool { get }
 
@@ -25,7 +24,6 @@ protocol SipManagerProtocol: AnyObject {
     func terminateAllCalls()
     
     func setMicrophone(muted:Bool)
-    func setSpeaker(_ speaker:Bool) -> Bool
     func setAudio(enabled:Bool)
     
     func setHold(call:Call, onHold hold:Bool) -> Bool

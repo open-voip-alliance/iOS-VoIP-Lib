@@ -35,16 +35,6 @@ public class Actions {
         sipManager.endCall(for: call)
     }
     
-    /// Turn on/off the speaker.
-    /// This function uses AVAudioCall to override the `Output Audio Port`. It also sets the `category` to `PlayAndRecord` and `mode` to `VoiceChat`.
-    ///
-    /// - Parameters:
-    ///     - speaker: The new state of the speaker.
-    /// - Returns: `Bool` Whether the change was successful.
-    public func setSpeaker(_ speaker:Bool) -> Bool {
-        return sipManager.setSpeaker(speaker)
-    }
-    
     /// Enable/disable the audio call.
     /// This is a `CallKit` support function. Which must be called by the `CXProviderDelegate` on `didActivate` and `didDeactivate`.
     ///

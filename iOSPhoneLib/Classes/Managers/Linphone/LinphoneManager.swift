@@ -73,7 +73,7 @@ class LinphoneManager: SipManagerProtocol {
         lc.echoCancellationEnabled = true
         lc.callkitEnabled = false
         lc.setUserAgent(uaName: config?.userAgent ?? "", version: "")
-
+            
         if let codecs = config?.codecs {
             setAudioCodecs(codecs)
         }
@@ -256,20 +256,6 @@ class LinphoneManager: SipManagerProtocol {
         lc.micEnabled = !muted
     }
     
-    func setSpeaker(_ speaker: Bool) -> Bool {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playAndRecord, mode: AVAudioSession.Mode.voiceChat)
-            try AVAudioSession.sharedInstance().setMode(AVAudioSession.Mode.voiceChat)
-            try AVAudioSession.sharedInstance().overrideOutputAudioPort(speaker ? .speaker : .none)
-            try AVAudioSession.sharedInstance().setActive(true)
-            print("AVAudioSession Category playAndRecord OK")
-            return true
-        } catch {
-            print("Soundmanager setCategory error: \(error.localizedDescription)")
-            return false
-        }
-    }
-    
     func setAudio(enabled:Bool) {
         debugPrint("Linphone set audio: \(enabled)")
         lc.activateAudioSession(actived: enabled)
@@ -349,51 +335,35 @@ class LinphoneStateManager:CoreDelegate {
         linphoneManager = manager
     }
     
-    override func onCallStateChanged(lc: Core, call: LinphoneCall, cstate: LinphoneCall.State, message: String) { //wip change this call to linphoneCall
+    override func onCallStateChanged(lc: Core, call: LinphoneCall, cstate: LinphoneCall.State, message: String) {
         print("OnCallStateChanged, state:\(cstate) with message:\(message).")
 
         preserveHeaders(call: call)
-        
-        if cstate == .IncomingReceived || cstate == .OutgoingInit {
-            guard let phoneLibCall = Call(linphoneCall: call) else {
-                try? call.terminate()
-                print("Call terminated because remoteAddress was nil.")
-                return
-            }
-            DispatchQueue.main.async {
-                if phoneLibCall.state == .outgoingDidInitialize {
-                    self.linphoneManager.config?.callDelegate.outgoingDidInitialize(call: phoneLibCall)
-                } else {
-                    self.linphoneManager.config?.callDelegate.didReceive(incomingCall: phoneLibCall)
-                }
-                
-            }
-            return
-        }
         
         guard let phoneLibCall = Call(linphoneCall: call) else {
             print("Unable to create call, no remote address")
             return
         }
-        phoneLibCall.updateInfo(linphoneCall: call)
-                
+        
+        guard let delegate = self.linphoneManager.config?.callDelegate else {
+            print("Unable to send events as no call delegate")
+            return
+        }
+        
         DispatchQueue.main.async {
-            guard let delegate = self.linphoneManager.config?.callDelegate else {
-                print("Unable to send events as no call delegate")
-                return
-            }
             switch cstate {
-            case .Connected:
-                delegate.callConnected(phoneLibCall)
-            case .End:
-                delegate.callEnded(phoneLibCall)
-            case .Released:
-                delegate.callReleased(phoneLibCall)
-            case .Error: // The call encountered an error
-                delegate.error(call: phoneLibCall, message: message)
-            default:
-                delegate.callUpdated(phoneLibCall, message: message)
-                print("Default call state: \(cstate)")
+                case .OutgoingInit:
+                    delegate.outgoingCallCreated(phoneLibCall)
+                case .IncomingReceived:
+                    delegate.incomingCallReceived(phoneLibCall)
+                case .Connected:
+                    delegate.callConnected(phoneLibCall)
+                case .End:
+                    delegate.callEnded(phoneLibCall)
+                case .Error:
+                    delegate.error(phoneLibCall, message: message)
+                default:
+                    delegate.callUpdated(phoneLibCall, message: message)
             }
         }
     }
