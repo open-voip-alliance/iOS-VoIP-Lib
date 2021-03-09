@@ -84,10 +84,6 @@ public class PhoneLib {
         
     }
     
-    public var isSpeakerOn:Bool {
-        sipManager.isSpeakerOn
-    }
-    
     public func actions(call: Call) -> Actions {
         Actions(sipManager: sipManager, call: call)
     }

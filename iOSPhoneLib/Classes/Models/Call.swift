@@ -11,9 +11,23 @@ public class Call:NSObject {
     public let callId = UUID()
     let linphoneCall: LinphoneCall
     
-    public var remoteNumber:String
-    public var displayName:String?
-    public var remoteEnvironment:String?
+    public var remoteNumber: String {
+        get {
+            linphoneCall.remoteAddress?.displayName ?? ""
+        }
+    }
+    
+    public var displayName: String {
+        get {
+            linphoneCall.remoteAddress?.username ?? ""
+        }
+    }
+    
+    public var remoteEnvironment: String {
+        get {
+            linphoneCall.remoteAddress?.domain ?? ""
+        }
+    }
     
     public var state:CallState {
         get {
@@ -50,20 +64,10 @@ public class Call:NSObject {
     }
     
     init?(linphoneCall: LinphoneCall) {
-        guard let address = linphoneCall.remoteAddress else { return nil }
+        guard linphoneCall.remoteAddress != nil else { return nil }
         self.linphoneCall = linphoneCall
-        displayName = address.displayName
-        remoteEnvironment = address.domain
-        remoteNumber = address.username
     }
-    
-    init(linphoneCall: LinphoneCall, number:String) {
-        self.linphoneCall = linphoneCall
-        self.remoteNumber = number
-        super.init()
-        updateInfo(linphoneCall: linphoneCall)
-    }
-    
+        
     /// Resumes a call.
     /// The call needs to have been paused previously with `pause()`
     public func resume() throws {
@@ -74,14 +78,6 @@ public class Call:NSObject {
     /// be played to the remote user. The only way to resume a paused call is to call `resume()`
     public func pause() throws {
         try linphoneCall.pause()
-    }
-    
-    func updateInfo(linphoneCall:LinphoneCall) {
-        displayName = linphoneCall.remoteAddress?.displayName
-        remoteEnvironment = linphoneCall.remoteAddress?.domain
-        if let user = linphoneCall.remoteAddress?.username {
-            remoteNumber = user
-        }
     }
 }
 
