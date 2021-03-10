@@ -338,8 +338,6 @@ class LinphoneStateManager:CoreDelegate {
     override func onCallStateChanged(lc: Core, call: LinphoneCall, cstate: LinphoneCall.State, message: String) {
         print("OnCallStateChanged, state:\(cstate) with message:\(message).")
 
-        preserveHeaders(call: call)
-        
         guard let phoneLibCall = Call(linphoneCall: call) else {
             print("Unable to create call, no remote address")
             return
@@ -355,6 +353,7 @@ class LinphoneStateManager:CoreDelegate {
                 case .OutgoingInit:
                     delegate.outgoingCallCreated(phoneLibCall)
                 case .IncomingReceived:
+                    self.preserveHeaders(call: call)
                     delegate.incomingCallReceived(phoneLibCall)
                 case .Connected:
                     delegate.callConnected(phoneLibCall)
