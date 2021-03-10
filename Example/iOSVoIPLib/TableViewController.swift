@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import iOSPhoneLib
+import iOSVoIPLib
 
 class TableViewController: UITableViewController {
 

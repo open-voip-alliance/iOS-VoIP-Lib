@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-               BuildableName = "iOSPhoneLib_Example.app"
-               BlueprintName = "iOSPhoneLib_Example"
-               ReferencedContainer = "container:iOSPhoneLib.xcodeproj">
+               BuildableName = "iOSVoIPLib_Example.app"
+               BlueprintName = "iOSVoIPLib_Example"
+               ReferencedContainer = "container:iOSVoIPLib.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "iOSPhoneLib_Tests.xctest"
-               BlueprintName = "iOSPhoneLib_Tests"
-               ReferencedContainer = "container:iOSPhoneLib.xcodeproj">
+               BuildableName = "iOSVoIPLib_Tests.xctest"
+               BlueprintName = "iOSVoIPLib_Tests"
+               ReferencedContainer = "container:iOSVoIPLib.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "iOSPhoneLib_Example.app"
-            BlueprintName = "iOSPhoneLib_Example"
-            ReferencedContainer = "container:iOSPhoneLib.xcodeproj">
+            BuildableName = "iOSVoIPLib_Example.app"
+            BlueprintName = "iOSVoIPLib_Example"
+            ReferencedContainer = "container:iOSVoIPLib.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -56,9 +56,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "iOSPhoneLib_Tests.xctest"
-               BlueprintName = "iOSPhoneLib_Tests"
-               ReferencedContainer = "container:iOSPhoneLib.xcodeproj">
+               BuildableName = "iOSVoIPLib_Tests.xctest"
+               BlueprintName = "iOSVoIPLib_Tests"
+               ReferencedContainer = "container:iOSVoIPLib.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -78,9 +78,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "iOSPhoneLib_Example.app"
-            BlueprintName = "iOSPhoneLib_Example"
-            ReferencedContainer = "container:iOSPhoneLib.xcodeproj">
+            BuildableName = "iOSVoIPLib_Example.app"
+            BlueprintName = "iOSVoIPLib_Example"
+            ReferencedContainer = "container:iOSVoIPLib.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "iOSPhoneLib_Example.app"
-            BlueprintName = "iOSPhoneLib_Example"
-            ReferencedContainer = "container:iOSPhoneLib.xcodeproj">
+            BuildableName = "iOSVoIPLib_Example.app"
+            BlueprintName = "iOSVoIPLib_Example"
+            ReferencedContainer = "container:iOSVoIPLib.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

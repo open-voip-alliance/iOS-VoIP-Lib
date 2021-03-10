@@ -1,5 +1,5 @@
 PODS:
-  - iOSPhoneLib (0.1.0):
+  - iOSVoIPLib (0.1.0):
     - linphone-sdk (= 4.4.1)
   - linphone-sdk (4.4.1):
     - linphone-sdk/all-frameworks (= 4.4.1)
@@ -18,20 +18,20 @@ PODS:
     - linphone-sdk/basic-frameworks
 
 DEPENDENCIES:
-  - iOSPhoneLib (from `../`)
+  - iOSVoIPLib (from `../`)
 
 SPEC REPOS:
   https://gitlab.linphone.org/BC/public/podspec.git:
     - linphone-sdk
 
 EXTERNAL SOURCES:
-  iOSPhoneLib:
+  iOSVoIPLib:
     :path: "../"
 
 SPEC CHECKSUMS:
-  iOSPhoneLib: 0730c82fd91d77df1584b6dcb38dc985ee3e7986
+  iOSVoIPLib: 5d0a20228ab3f9bdcbb7e35903be4009bfa267b3
   linphone-sdk: 91183cb3e3224d2d1a211357cd6a39d61636d17d
 
-PODFILE CHECKSUM: c7e9778ea2db7c035e44a1509383c2b85027982d
+PODFILE CHECKSUM: 9fe0720857267babc157302bc4872d3229027bf9
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.10.0
