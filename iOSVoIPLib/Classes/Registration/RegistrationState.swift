@@ -1,6 +1,6 @@
 //
 //  RegistrationState.swift
-//  iOSPhoneLib
+//  iOSVoIPLib
 //
 //  Created by Jeremy Norman on 24/02/2021.
 //

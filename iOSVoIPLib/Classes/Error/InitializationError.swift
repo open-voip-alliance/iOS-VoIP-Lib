@@ -1,6 +1,6 @@
 //
 //  InitializationError.swift
-//  iOSPhoneLib
+//  iOSVoIPLib
 //
 //  Created by Jeremy Norman on 21/02/2021.
 //
