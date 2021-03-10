@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  iOSPhoneLib
+//  iOSVoIPLib
 //
 //  Created by jeremynorman89 on 02/18/2021.
 //  Copyright (c) 2021 jeremynorman89. All rights reserved.

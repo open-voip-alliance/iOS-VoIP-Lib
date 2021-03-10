@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		366642408801634064BA7858 /* Pods_iOSPhoneLib_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E5653FAA79B0A98A024ECCB /* Pods_iOSPhoneLib_Example.framework */; };
+		366642408801634064BA7858 /* Pods_iOSVoIPLib_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E5653FAA79B0A98A024ECCB /* Pods_iOSVoIPLib_Example.framework */; };
 		5C92D9E025DEE02E003019D1 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92D9DE25DEE02E003019D1 /* TableViewController.swift */; };
 		5C92D9E125DEE02E003019D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C92D9DF25DEE02E003019D1 /* Main.storyboard */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		F71DAD4E55BCEBA788F2163F /* Pods_iOSPhoneLib_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 059BFDD3A7B6FECD90EB2342 /* Pods_iOSPhoneLib_Tests.framework */; };
+		F71DAD4E55BCEBA788F2163F /* Pods_iOSVoIPLib_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 059BFDD3A7B6FECD90EB2342 /* Pods_iOSVoIPLib_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,31 +23,31 @@
 			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
-			remoteInfo = iOSPhoneLib;
+			remoteInfo = iOSVoIPLib;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		059BFDD3A7B6FECD90EB2342 /* Pods_iOSPhoneLib_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSPhoneLib_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		17AD4A56BAB50115AEA64458 /* Pods-iOSPhoneLib_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSPhoneLib_Example.debug.xcconfig"; path = "Target Support Files/Pods-iOSPhoneLib_Example/Pods-iOSPhoneLib_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		387E13631CFDC82954474438 /* iOSPhoneLib.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = iOSPhoneLib.podspec; path = ../iOSPhoneLib.podspec; sourceTree = "<group>"; };
-		5B084054B2EA811B7BCC8101 /* Pods-iOSPhoneLib_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSPhoneLib_Tests.debug.xcconfig"; path = "Target Support Files/Pods-iOSPhoneLib_Tests/Pods-iOSPhoneLib_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		059BFDD3A7B6FECD90EB2342 /* Pods_iOSVoIPLib_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSVoIPLib_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		17AD4A56BAB50115AEA64458 /* Pods-iOSVoIPLib_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSVoIPLib_Example.debug.xcconfig"; path = "Target Support Files/Pods-iOSVoIPLib_Example/Pods-iOSVoIPLib_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		387E13631CFDC82954474438 /* iOSVoIPLib.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = iOSVoIPLib.podspec; path = ../iOSVoIPLib.podspec; sourceTree = "<group>"; };
+		5B084054B2EA811B7BCC8101 /* Pods-iOSVoIPLib_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSVoIPLib_Tests.debug.xcconfig"; path = "Target Support Files/Pods-iOSVoIPLib_Tests/Pods-iOSVoIPLib_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		5C92D9DE25DEE02E003019D1 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		5C92D9DF25DEE02E003019D1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		5C92D9F025DEE1D2003019D1 /* iOSPhoneLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSPhoneLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C92DA1725DEE3FB003019D1 /* iOSPhoneLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSPhoneLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C92DA2F25DEE663003019D1 /* iOSPhoneLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSPhoneLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		607FACD01AFB9204008FA782 /* iOSPhoneLib_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSPhoneLib_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C92D9F025DEE1D2003019D1 /* iOSVoIPLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSVoIPLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C92DA1725DEE3FB003019D1 /* iOSVoIPLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSVoIPLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C92DA2F25DEE663003019D1 /* iOSVoIPLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSVoIPLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACD01AFB9204008FA782 /* iOSVoIPLib_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSVoIPLib_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		607FACE51AFB9204008FA782 /* iOSPhoneLib_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSPhoneLib_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACE51AFB9204008FA782 /* iOSVoIPLib_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSVoIPLib_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		6E5653FAA79B0A98A024ECCB /* Pods_iOSPhoneLib_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSPhoneLib_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8FA9869346A3F1CECE7AA701 /* Pods-iOSPhoneLib_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSPhoneLib_Example.release.xcconfig"; path = "Target Support Files/Pods-iOSPhoneLib_Example/Pods-iOSPhoneLib_Example.release.xcconfig"; sourceTree = "<group>"; };
-		9DDF9B1901B8BCE6C1AF239E /* Pods-iOSPhoneLib_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSPhoneLib_Tests.release.xcconfig"; path = "Target Support Files/Pods-iOSPhoneLib_Tests/Pods-iOSPhoneLib_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		6E5653FAA79B0A98A024ECCB /* Pods_iOSVoIPLib_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSVoIPLib_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8FA9869346A3F1CECE7AA701 /* Pods-iOSVoIPLib_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSVoIPLib_Example.release.xcconfig"; path = "Target Support Files/Pods-iOSVoIPLib_Example/Pods-iOSVoIPLib_Example.release.xcconfig"; sourceTree = "<group>"; };
+		9DDF9B1901B8BCE6C1AF239E /* Pods-iOSVoIPLib_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSVoIPLib_Tests.release.xcconfig"; path = "Target Support Files/Pods-iOSVoIPLib_Tests/Pods-iOSVoIPLib_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		B3B4BB21563C158E0B4AB32C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		C4B8E07076E48232EBD4073C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -57,7 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				366642408801634064BA7858 /* Pods_iOSPhoneLib_Example.framework in Frameworks */,
+				366642408801634064BA7858 /* Pods_iOSVoIPLib_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,7 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F71DAD4E55BCEBA788F2163F /* Pods_iOSPhoneLib_Tests.framework in Frameworks */,
+				F71DAD4E55BCEBA788F2163F /* Pods_iOSVoIPLib_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,7 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
-				607FACD21AFB9204008FA782 /* Example for iOSPhoneLib */,
+				607FACD21AFB9204008FA782 /* Example for iOSVoIPLib */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				B79BDB34F0677D148B4810E2 /* Pods */,
@@ -87,13 +87,13 @@
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD01AFB9204008FA782 /* iOSPhoneLib_Example.app */,
-				607FACE51AFB9204008FA782 /* iOSPhoneLib_Tests.xctest */,
+				607FACD01AFB9204008FA782 /* iOSVoIPLib_Example.app */,
+				607FACE51AFB9204008FA782 /* iOSVoIPLib_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		607FACD21AFB9204008FA782 /* Example for iOSPhoneLib */ = {
+		607FACD21AFB9204008FA782 /* Example for iOSVoIPLib */ = {
 			isa = PBXGroup;
 			children = (
 				5C92D9DF25DEE02E003019D1 /* Main.storyboard */,
@@ -103,8 +103,8 @@
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
-			name = "Example for iOSPhoneLib";
-			path = iOSPhoneLib;
+			name = "Example for iOSVoIPLib";
+			path = iOSVoIPLib;
 			sourceTree = "<group>";
 		};
 		607FACD31AFB9204008FA782 /* Supporting Files */ = {
@@ -135,7 +135,7 @@
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				387E13631CFDC82954474438 /* iOSPhoneLib.podspec */,
+				387E13631CFDC82954474438 /* iOSVoIPLib.podspec */,
 				B3B4BB21563C158E0B4AB32C /* README.md */,
 				C4B8E07076E48232EBD4073C /* LICENSE */,
 			);
@@ -145,10 +145,10 @@
 		B79BDB34F0677D148B4810E2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				17AD4A56BAB50115AEA64458 /* Pods-iOSPhoneLib_Example.debug.xcconfig */,
-				8FA9869346A3F1CECE7AA701 /* Pods-iOSPhoneLib_Example.release.xcconfig */,
-				5B084054B2EA811B7BCC8101 /* Pods-iOSPhoneLib_Tests.debug.xcconfig */,
-				9DDF9B1901B8BCE6C1AF239E /* Pods-iOSPhoneLib_Tests.release.xcconfig */,
+				17AD4A56BAB50115AEA64458 /* Pods-iOSVoIPLib_Example.debug.xcconfig */,
+				8FA9869346A3F1CECE7AA701 /* Pods-iOSVoIPLib_Example.release.xcconfig */,
+				5B084054B2EA811B7BCC8101 /* Pods-iOSVoIPLib_Tests.debug.xcconfig */,
+				9DDF9B1901B8BCE6C1AF239E /* Pods-iOSVoIPLib_Tests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -156,11 +156,11 @@
 		B8ADDFA86A614E85311B42D1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5C92DA2F25DEE663003019D1 /* iOSPhoneLib.framework */,
-				5C92DA1725DEE3FB003019D1 /* iOSPhoneLib.framework */,
-				5C92D9F025DEE1D2003019D1 /* iOSPhoneLib.framework */,
-				6E5653FAA79B0A98A024ECCB /* Pods_iOSPhoneLib_Example.framework */,
-				059BFDD3A7B6FECD90EB2342 /* Pods_iOSPhoneLib_Tests.framework */,
+				5C92DA2F25DEE663003019D1 /* iOSVoIPLib.framework */,
+				5C92DA1725DEE3FB003019D1 /* iOSVoIPLib.framework */,
+				5C92D9F025DEE1D2003019D1 /* iOSVoIPLib.framework */,
+				6E5653FAA79B0A98A024ECCB /* Pods_iOSVoIPLib_Example.framework */,
+				059BFDD3A7B6FECD90EB2342 /* Pods_iOSVoIPLib_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -168,9 +168,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		607FACCF1AFB9204008FA782 /* iOSPhoneLib_Example */ = {
+		607FACCF1AFB9204008FA782 /* iOSVoIPLib_Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "iOSPhoneLib_Example" */;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "iOSVoIPLib_Example" */;
 			buildPhases = (
 				82510E679188EB0816824268 /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
@@ -182,14 +182,14 @@
 			);
 			dependencies = (
 			);
-			name = iOSPhoneLib_Example;
-			productName = iOSPhoneLib;
-			productReference = 607FACD01AFB9204008FA782 /* iOSPhoneLib_Example.app */;
+			name = iOSVoIPLib_Example;
+			productName = iOSVoIPLib;
+			productReference = 607FACD01AFB9204008FA782 /* iOSVoIPLib_Example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		607FACE41AFB9204008FA782 /* iOSPhoneLib_Tests */ = {
+		607FACE41AFB9204008FA782 /* iOSVoIPLib_Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "iOSPhoneLib_Tests" */;
+			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "iOSVoIPLib_Tests" */;
 			buildPhases = (
 				0C4139E1771775F142615AA2 /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
@@ -201,9 +201,9 @@
 			dependencies = (
 				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
 			);
-			name = iOSPhoneLib_Tests;
+			name = iOSVoIPLib_Tests;
 			productName = Tests;
-			productReference = 607FACE51AFB9204008FA782 /* iOSPhoneLib_Tests.xctest */;
+			productReference = 607FACE51AFB9204008FA782 /* iOSVoIPLib_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -229,7 +229,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "iOSPhoneLib" */;
+			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "iOSVoIPLib" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -242,8 +242,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				607FACCF1AFB9204008FA782 /* iOSPhoneLib_Example */,
-				607FACE41AFB9204008FA782 /* iOSPhoneLib_Tests */,
+				607FACCF1AFB9204008FA782 /* iOSVoIPLib_Example */,
+				607FACE41AFB9204008FA782 /* iOSVoIPLib_Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -284,7 +284,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iOSPhoneLib_Tests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-iOSVoIPLib_Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -297,8 +297,8 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iOSPhoneLib_Example/Pods-iOSPhoneLib_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/iOSPhoneLib/iOSPhoneLib.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-iOSVoIPLib_Example/Pods-iOSVoIPLib_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/iOSVoIPLib/iOSVoIPLib.framework",
 				"${PODS_ROOT}/linphone-sdk/linphone-sdk/apple-darwin/Frameworks/bctoolbox-ios.framework",
 				"${PODS_ROOT}/linphone-sdk/linphone-sdk/apple-darwin/Frameworks/bctoolbox-tester.framework",
 				"${PODS_ROOT}/linphone-sdk/linphone-sdk/apple-darwin/Frameworks/bctoolbox.framework",
@@ -321,7 +321,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSPhoneLib.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSVoIPLib.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/bctoolbox-ios.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/bctoolbox-tester.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/bctoolbox.framework",
@@ -344,7 +344,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iOSPhoneLib_Example/Pods-iOSPhoneLib_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iOSVoIPLib_Example/Pods-iOSVoIPLib_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		82510E679188EB0816824268 /* [CP] Check Pods Manifest.lock */ = {
@@ -362,7 +362,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iOSPhoneLib_Example-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-iOSVoIPLib_Example-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -394,7 +394,7 @@
 /* Begin PBXTargetDependency section */
 		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 607FACCF1AFB9204008FA782 /* iOSPhoneLib_Example */;
+			target = 607FACCF1AFB9204008FA782 /* iOSVoIPLib_Example */;
 			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -522,14 +522,14 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 17AD4A56BAB50115AEA64458 /* Pods-iOSPhoneLib_Example.debug.xcconfig */;
+			baseConfigurationReference = 17AD4A56BAB50115AEA64458 /* Pods-iOSVoIPLib_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = E2Q9UE8HM6;
-				INFOPLIST_FILE = iOSPhoneLib/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks ${TARGET_BUILD_DIR}/iOSPhoneLib.framework";
+				INFOPLIST_FILE = iOSVoIPLib/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks ${TARGET_BUILD_DIR}/iOSVoIPLib.framework";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.openvoipalliance.iOSPhoneLib-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.openvoipalliance.iOSVoIPLib-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -538,14 +538,14 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8FA9869346A3F1CECE7AA701 /* Pods-iOSPhoneLib_Example.release.xcconfig */;
+			baseConfigurationReference = 8FA9869346A3F1CECE7AA701 /* Pods-iOSVoIPLib_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = E2Q9UE8HM6;
-				INFOPLIST_FILE = iOSPhoneLib/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks ${TARGET_BUILD_DIR}/iOSPhoneLib.framework";
+				INFOPLIST_FILE = iOSVoIPLib/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks ${TARGET_BUILD_DIR}/iOSVoIPLib.framework";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.openvoipalliance.iOSPhoneLib-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.openvoipalliance.iOSVoIPLib-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -554,7 +554,7 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B084054B2EA811B7BCC8101 /* Pods-iOSPhoneLib_Tests.debug.xcconfig */;
+			baseConfigurationReference = 5B084054B2EA811B7BCC8101 /* Pods-iOSVoIPLib_Tests.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				DEVELOPMENT_TEAM = E2Q9UE8HM6;
@@ -572,13 +572,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOSPhoneLib_Example.app/iOSPhoneLib_Example";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOSVoIPLib_Example.app/iOSVoIPLib_Example";
 			};
 			name = Debug;
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9DDF9B1901B8BCE6C1AF239E /* Pods-iOSPhoneLib_Tests.release.xcconfig */;
+			baseConfigurationReference = 9DDF9B1901B8BCE6C1AF239E /* Pods-iOSVoIPLib_Tests.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				DEVELOPMENT_TEAM = E2Q9UE8HM6;
@@ -592,14 +592,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOSPhoneLib_Example.app/iOSPhoneLib_Example";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOSVoIPLib_Example.app/iOSVoIPLib_Example";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "iOSPhoneLib" */ = {
+		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "iOSVoIPLib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACED1AFB9204008FA782 /* Debug */,
@@ -608,7 +608,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "iOSPhoneLib_Example" */ = {
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "iOSVoIPLib_Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF01AFB9204008FA782 /* Debug */,
@@ -617,7 +617,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "iOSPhoneLib_Tests" */ = {
+		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "iOSVoIPLib_Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF31AFB9204008FA782 /* Debug */,
