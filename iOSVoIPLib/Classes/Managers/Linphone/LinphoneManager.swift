@@ -90,6 +90,8 @@ class LinphoneManager: SipManagerProtocol {
         
         do {
             try lc.start()
+            
+            startLinphoneIterating()
         } catch {
             isInitialized = false
             print("Linphone starting failed")
@@ -97,7 +99,7 @@ class LinphoneManager: SipManagerProtocol {
         return isInitialized
     }
     
-    private func setTimer() {
+    private func startLinphoneIterating() {
         DispatchQueue.global().async {
             while(self.isInitialized){
                 self.lc.iterate() // first iterate initiates registration
@@ -155,7 +157,6 @@ class LinphoneManager: SipManagerProtocol {
             
             lc.useRfc2833ForDtmf = true
             lc.ipv6Enabled = true
-            setTimer()
             print("Linphone successfully registering")
         } catch (let error) {
             print("Linphone registering identify error: \(error)")
