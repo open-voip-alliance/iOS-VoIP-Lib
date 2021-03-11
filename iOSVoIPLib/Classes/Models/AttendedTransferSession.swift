@@ -1,6 +1,6 @@
 //
 //  AttendedTransferSession.swift
-//  PhoneLib
+//  VoIPLib
 //
 //  Created by Chris Kontos on 06/10/2020.
 //

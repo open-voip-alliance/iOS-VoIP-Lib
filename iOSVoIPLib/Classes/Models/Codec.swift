@@ -1,6 +1,6 @@
 //
 //  Codec.swift
-//  PhoneLib
+//  VoIPLib
 //
 //  Created by Fabian Giger on 01/07/2020.
 //

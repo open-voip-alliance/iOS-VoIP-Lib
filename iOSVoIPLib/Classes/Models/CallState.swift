@@ -1,6 +1,6 @@
 //
 //  CallState.swift
-//  PhoneLib
+//  VoIPLib
 //
 //  Created by Fabian Giger on 02/07/2020.
 //
