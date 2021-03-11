@@ -41,9 +41,9 @@ class TableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        PhoneLib.shared.registrationDelegate = self
-        PhoneLib.shared.sessionDelegate = self
-        PhoneLib.shared.setUserAgent("PhoneLibExample", version: "1")
+        VoIPLib.shared.registrationDelegate = self
+        VoIPLib.shared.sessionDelegate = self
+        VoIPLib.shared.setUserAgent("VoIPLibExample", version: "1")
     }
     
     
@@ -54,30 +54,30 @@ class TableViewController: UITableViewController {
     }
 
     @IBAction func connect(_ sender: Any) {
-        if PhoneLib.shared.registrationStatus == .registered {
-            PhoneLib.shared.unregister {
+        if VoIPLib.shared.registrationStatus == .registered {
+            VoIPLib.shared.unregister {
                 (sender as! UIButton).setTitle("Connect", for: .normal)
             }
         } else {
-            let success = PhoneLib.shared.register(domain: domainTF.text!,
+            let success = VoIPLib.shared.register(domain: domainTF.text!,
                                                       port: Int(portTF.text!)!,
                                                       username: accountTF.text!,
                                                       password: passwordTF.text!,
                                                       encrypted: useTLS.isOn)
             debugPrint("Registering result: \(success)")
             (sender as! UIButton).setTitle(success ? "Disconnect" : "Failed", for: .normal)
-            PhoneLib.shared.resetAudioCodecs()
+            VoIPLib.shared.resetAudioCodecs()
         }
     }
     
     @IBAction func call(_ sender: Any) {
         //Two active lines.
         if let active = activeSession {
-            PhoneLib.shared.setHold(session: active, onHold: true)
+            VoIPLib.shared.setHold(session: active, onHold: true)
             holdSession = active
             activeSession = nil
         }
-        let outgoingSuccess = PhoneLib.shared.call(to: numberTF.text!)
+        let outgoingSuccess = VoIPLib.shared.call(to: numberTF.text!)
         stateLabel.text = "Call res: \(outgoingSuccess)"
         debugPrint("Call res: \(outgoingSuccess)")
         callDecline.isHidden = (outgoingSuccess == nil)
@@ -85,14 +85,14 @@ class TableViewController: UITableViewController {
     
     @IBAction func answer(_ sender: Any) {
         guard let session = activeSession else { return }
-        stateLabel.text = "Answer: \(PhoneLib.shared.acceptCall(for: session))"
+        stateLabel.text = "Answer: \(VoIPLib.shared.acceptCall(for: session))"
         callAnswer.isHidden = true
         callTransfer.isHidden = false
     }
     
     @IBAction func decline(_ sender: Any) {
         guard let session = activeSession else { return }
-        stateLabel.text = "Ended: \(PhoneLib.shared.endCall(for: session))"
+        stateLabel.text = "Ended: \(VoIPLib.shared.endCall(for: session))"
         callAnswer.isHidden = true
         callDecline.isHidden = true
         callTransfer.isHidden = true
@@ -100,7 +100,7 @@ class TableViewController: UITableViewController {
     
     @IBAction func holdCall(_ sender: UIButton) {
         guard let session = activeSession else { return }
-        stateLabel.text = "Hold successful: \(PhoneLib.shared.setHold(session: session, onHold: session.state != .paused))"
+        stateLabel.text = "Hold successful: \(VoIPLib.shared.setHold(session: session, onHold: session.state != .paused))"
         sender.setTitle(session.state == .pausing ? "Unhold" : "Hold", for: .normal)
     }
     
@@ -117,7 +117,7 @@ class TableViewController: UITableViewController {
         // 3. Grab the value from the text field, and print it when the user clicks OK.
         alert.addAction(UIAlertAction(title: "Transfer", style: .default, handler: { [weak alert] (_) in
             guard let textField = alert?.textFields?.first, !textField.text!.isEmpty else { return }
-            let _ = PhoneLib.shared.transfer(session: self.activeSession!, to: textField.text!)
+            let _ = VoIPLib.shared.transfer(session: self.activeSession!, to: textField.text!)
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
@@ -127,13 +127,13 @@ class TableViewController: UITableViewController {
     }
     
     @IBAction func toggleMic(_ sender: UIButton) {
-        PhoneLib.shared.setMicrophone(muted: !PhoneLib.shared.isMicrophoneMuted)
-        sender.setTitle(PhoneLib.shared.isMicrophoneMuted ? "Unmute mic" : "Mute mic", for: .normal)
+        VoIPLib.shared.setMicrophone(muted: !VoIPLib.shared.isMicrophoneMuted)
+        sender.setTitle(VoIPLib.shared.isMicrophoneMuted ? "Unmute mic" : "Mute mic", for: .normal)
     }
     
     @IBAction func toggleSpeaker(_ sender: UIButton) {
-        _ = PhoneLib.shared.setSpeaker(!PhoneLib.shared.isSpeakerOn)
-        sender.setTitle(PhoneLib.shared.isSpeakerOn ? "Turn off speaker" : "Turn on speaker", for: .normal)
+        _ = VoIPLib.shared.setSpeaker(!VoIPLib.shared.isSpeakerOn)
+        sender.setTitle(VoIPLib.shared.isSpeakerOn ? "Turn off speaker" : "Turn on speaker", for: .normal)
     }
 }
 

@@ -338,7 +338,7 @@ class LinphoneStateManager:CoreDelegate {
     override func onCallStateChanged(lc: Core, call: LinphoneCall, cstate: LinphoneCall.State, message: String) {
         print("OnCallStateChanged, state:\(cstate) with message:\(message).")
 
-        guard let phoneLibCall = Call(linphoneCall: call) else {
+        guard let voipLibCall = Call(linphoneCall: call) else {
             print("Unable to create call, no remote address")
             return
         }
@@ -351,18 +351,18 @@ class LinphoneStateManager:CoreDelegate {
         DispatchQueue.main.async {
             switch cstate {
                 case .OutgoingInit:
-                    delegate.outgoingCallCreated(phoneLibCall)
+                    delegate.outgoingCallCreated(voipLibCall)
                 case .IncomingReceived:
                     self.preserveHeaders(call: call)
-                    delegate.incomingCallReceived(phoneLibCall)
+                    delegate.incomingCallReceived(voipLibCall)
                 case .Connected:
-                    delegate.callConnected(phoneLibCall)
+                    delegate.callConnected(voipLibCall)
                 case .End:
-                    delegate.callEnded(phoneLibCall)
+                    delegate.callEnded(voipLibCall)
                 case .Error:
-                    delegate.error(phoneLibCall, message: message)
+                    delegate.error(voipLibCall, message: message)
                 default:
-                    delegate.callUpdated(phoneLibCall, message: message)
+                    delegate.callUpdated(voipLibCall, message: message)
             }
         }
     }

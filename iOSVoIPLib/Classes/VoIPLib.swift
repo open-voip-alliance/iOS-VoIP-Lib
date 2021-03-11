@@ -7,9 +7,9 @@
 
 import Foundation
 
-public class PhoneLib {
+public class VoIPLib {
     
-    static public let shared = PhoneLib()
+    static public let shared = VoIPLib()
 
     public var isRegistered: Bool {
         get { sipManager.isRegistered }
