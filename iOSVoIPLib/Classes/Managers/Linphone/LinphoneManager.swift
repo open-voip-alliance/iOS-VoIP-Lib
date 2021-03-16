@@ -75,7 +75,8 @@ class LinphoneManager: SipManagerProtocol {
         lc.setUserAgent(uaName: config?.userAgent ?? "", version: "")
         lc.dnsSrvEnabled = false
         lc.dnsSearchEnabled = false
-            
+        lc.dnsServers = ["8.8.8.8", "8.8.4.4"]
+        
         if let codecs = config?.codecs {
             setAudioCodecs(codecs)
         }
