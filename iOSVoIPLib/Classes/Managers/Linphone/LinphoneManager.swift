@@ -73,6 +73,8 @@ class LinphoneManager: SipManagerProtocol {
         lc.echoCancellationEnabled = true
         lc.callkitEnabled = false
         lc.setUserAgent(uaName: config?.userAgent ?? "", version: "")
+        lc.dnsSrvEnabled = false
+        lc.dnsSearchEnabled = false
             
         if let codecs = config?.codecs {
             setAudioCodecs(codecs)
