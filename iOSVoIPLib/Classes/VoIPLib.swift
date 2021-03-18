@@ -68,9 +68,9 @@ public class VoIPLib {
     ///
     /// - Parameters:
     ///     - number: The phone number to call
-    /// - Returns: `Call?`  The call or nil if the call has not been successful
-    public func call(to number: String) -> Call? {
-        sipManager.call(to: number)
+    /// - Returns: Returns true when call succeeds, false when the number is an empty string or the phone service isn't ready.
+    public func call(to number: String) -> Bool {
+        return sipManager.call(to: number) != nil
     }
     
     public var isMicrophoneMuted:Bool {
