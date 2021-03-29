@@ -29,7 +29,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cj5-uc-XCg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-279" y="95"/>
+            <point key="canvasLocation" x="452" y="191"/>
         </scene>
         <!--Dialer-->
         <scene sceneID="BgK-fz-bAP">
@@ -171,7 +171,7 @@
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="35"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gMN-TZ-8NA">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gMN-TZ-8NA">
                                 <rect key="frame" x="142" y="487" width="90" height="52"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -256,7 +256,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wcJ-gh-zcC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-279.19999999999999" y="-514.09295352323841"/>
+            <point key="canvasLocation" x="452" y="-573"/>
         </scene>
         <!--Incoming Call View Controller-->
         <scene sceneID="o0r-8o-cv4">
@@ -343,7 +343,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SqW-tO-PIE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-279.19999999999999" y="-1822.0389805097452"/>
+            <point key="canvasLocation" x="452" y="-2091"/>
         </scene>
         <!--Call View Controller-->
         <scene sceneID="hBO-Lk-NwY">
@@ -473,12 +473,6 @@
                                     <action selector="keypadButtonWasPressed:" destination="Dqm-1b-3En" eventType="primaryActionTriggered" id="jSZ-XD-LJy"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inactive Call" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ga-5r-JHP">
-                                <rect key="frame" x="134" y="499" width="107" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vjd-aB-vGf">
                                 <rect key="frame" x="134" y="381" width="107" height="52"/>
                                 <color key="backgroundColor" systemColor="systemRedColor"/>
@@ -495,6 +489,19 @@
                                     <action selector="keypadButtonWasPressed:" destination="Dqm-1b-3En" eventType="primaryActionTriggered" id="nXe-b5-RU3"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inactive Call" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ga-5r-JHP">
+                                <rect key="frame" x="16" y="213" width="343" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CxQ-7G-3yR">
+                                <rect key="frame" x="16" y="438" width="343" height="199"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
@@ -502,8 +509,9 @@
                             <constraint firstItem="mKU-J9-eKZ" firstAttribute="bottom" secondItem="XUw-TE-W4S" secondAttribute="bottom" id="4Yv-MP-vYb"/>
                             <constraint firstItem="mKU-J9-eKZ" firstAttribute="leading" secondItem="mFc-n6-d3s" secondAttribute="trailing" constant="10" id="5UN-yP-zH7"/>
                             <constraint firstItem="3JX-X5-3Id" firstAttribute="top" secondItem="QFR-Gp-djg" secondAttribute="bottom" priority="200" constant="20" id="5jr-9k-J8c"/>
+                            <constraint firstItem="d1s-mr-qgF" firstAttribute="leading" secondItem="mFc-n6-d3s" secondAttribute="leading" id="6J0-Yk-VOC"/>
                             <constraint firstItem="mKU-J9-eKZ" firstAttribute="leading" secondItem="5ci-Z0-o1a" secondAttribute="leading" id="7HW-Vf-2Tw"/>
-                            <constraint firstItem="5Wc-vU-ZMI" firstAttribute="top" secondItem="1ga-5r-JHP" secondAttribute="bottom" constant="124" id="7gj-IW-Vpr"/>
+                            <constraint firstItem="CxQ-7G-3yR" firstAttribute="trailing" secondItem="TOx-f0-DDp" secondAttribute="trailingMargin" id="838-cB-5lc"/>
                             <constraint firstItem="wKL-fZ-zbv" firstAttribute="centerX" secondItem="mKU-J9-eKZ" secondAttribute="centerX" id="9I6-gk-6KF"/>
                             <constraint firstItem="mKU-J9-eKZ" firstAttribute="top" secondItem="XUw-TE-W4S" secondAttribute="top" id="9xj-uV-xH5"/>
                             <constraint firstItem="d1s-mr-qgF" firstAttribute="baseline" secondItem="5ci-Z0-o1a" secondAttribute="baseline" id="A4m-tj-Ygx"/>
@@ -516,18 +524,21 @@
                             <constraint firstItem="mFc-n6-d3s" firstAttribute="leading" secondItem="d1s-mr-qgF" secondAttribute="leading" id="Hyl-Po-vmO"/>
                             <constraint firstItem="5Wc-vU-ZMI" firstAttribute="top" secondItem="d1s-mr-qgF" secondAttribute="bottom" constant="274" id="I5d-nE-s7c"/>
                             <constraint firstItem="d1s-mr-qgF" firstAttribute="top" secondItem="5ci-Z0-o1a" secondAttribute="top" id="IrS-MH-fUp"/>
-                            <constraint firstItem="1ga-5r-JHP" firstAttribute="top" secondItem="Vjd-aB-vGf" secondAttribute="bottom" constant="66" id="JyD-et-rs1"/>
+                            <constraint firstItem="1ga-5r-JHP" firstAttribute="top" secondItem="Vjd-aB-vGf" secondAttribute="bottom" constant="-220" id="JyD-et-rs1"/>
                             <constraint firstItem="mKU-J9-eKZ" firstAttribute="top" secondItem="wKL-fZ-zbv" secondAttribute="bottom" constant="40" id="M6F-0Q-gm0"/>
                             <constraint firstItem="5ra-Om-p6N" firstAttribute="centerX" secondItem="wKL-fZ-zbv" secondAttribute="centerX" id="Nfw-64-Fvl"/>
                             <constraint firstItem="1ga-5r-JHP" firstAttribute="centerX" secondItem="TOx-f0-DDp" secondAttribute="centerX" id="U0a-Wq-WZn"/>
                             <constraint firstItem="3JX-X5-3Id" firstAttribute="leading" secondItem="wKL-fZ-zbv" secondAttribute="leading" id="WTc-oi-ecZ"/>
                             <constraint firstItem="mFc-n6-d3s" firstAttribute="leading" secondItem="TOx-f0-DDp" secondAttribute="leadingMargin" id="aIF-GO-RvE"/>
+                            <constraint firstItem="CxQ-7G-3yR" firstAttribute="leading" secondItem="TOx-f0-DDp" secondAttribute="leadingMargin" id="ci1-ax-XP0"/>
                             <constraint firstItem="mFc-n6-d3s" firstAttribute="trailing" secondItem="d1s-mr-qgF" secondAttribute="trailing" id="d86-jd-n9v"/>
-                            <constraint firstItem="5ci-Z0-o1a" firstAttribute="leading" secondItem="1ga-5r-JHP" secondAttribute="leading" id="exT-Dt-3sv"/>
+                            <constraint firstItem="5Wc-vU-ZMI" firstAttribute="top" secondItem="CxQ-7G-3yR" secondAttribute="bottom" constant="10" id="eqs-yf-xjY"/>
+                            <constraint firstItem="d1s-mr-qgF" firstAttribute="leading" secondItem="1ga-5r-JHP" secondAttribute="leading" id="exT-Dt-3sv"/>
                             <constraint firstItem="d1s-mr-qgF" firstAttribute="top" secondItem="mFc-n6-d3s" secondAttribute="bottom" constant="8" id="gHy-bW-C1O"/>
                             <constraint firstItem="3JX-X5-3Id" firstAttribute="trailing" secondItem="wKL-fZ-zbv" secondAttribute="trailing" id="j64-Ba-DNa"/>
                             <constraint firstItem="mFc-n6-d3s" firstAttribute="top" secondItem="mKU-J9-eKZ" secondAttribute="top" id="k8j-Ad-YQG"/>
                             <constraint firstItem="5ci-Z0-o1a" firstAttribute="centerX" secondItem="Vjd-aB-vGf" secondAttribute="centerX" id="mAz-gD-Fkl"/>
+                            <constraint firstItem="CxQ-7G-3yR" firstAttribute="top" secondItem="Vjd-aB-vGf" secondAttribute="bottom" constant="5" id="ngy-95-9gc"/>
                             <constraint firstItem="mFc-n6-d3s" firstAttribute="baseline" secondItem="mKU-J9-eKZ" secondAttribute="baseline" id="qYL-q8-Ywp"/>
                             <constraint firstItem="l98-ao-F4b" firstAttribute="top" secondItem="3JX-X5-3Id" secondAttribute="bottom" constant="8" id="vLV-aA-iA6"/>
                             <constraint firstItem="d1s-mr-qgF" firstAttribute="firstBaseline" secondItem="5ci-Z0-o1a" secondAttribute="firstBaseline" id="war-Tw-cYL"/>
@@ -540,6 +551,7 @@
                         <outlet property="callDuration" destination="5ra-Om-p6N" id="ewj-YU-YZs"/>
                         <outlet property="callStatus" destination="wKL-fZ-zbv" id="Y14-Nq-NWA"/>
                         <outlet property="callSubtitle" destination="l98-ao-F4b" id="Whz-as-1YD"/>
+                        <outlet property="callTextView" destination="CxQ-7G-3yR" id="tKR-lO-YXk"/>
                         <outlet property="callTitle" destination="3JX-X5-3Id" id="8Qv-X3-YPe"/>
                         <outlet property="earpieceButton" destination="5ci-Z0-o1a" id="8Cx-SJ-UyE"/>
                         <outlet property="holdButton" destination="mKU-J9-eKZ" id="Zdn-fU-euy"/>
@@ -553,7 +565,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1OD-kl-bJ7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="zwf-tG-9HR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-279.19999999999999" y="-1166.2668665667168"/>
+            <point key="canvasLocation" x="452" y="-1375"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hs9-15-RXg">
@@ -565,15 +577,55 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="Dqm-1b-3En" kind="relationship" relationship="viewControllers" id="u6a-HV-UJB"/>
-                        <segue destination="iji-v9-KEx" kind="relationship" relationship="viewControllers" id="M2Q-fe-1uW"/>
                         <segue destination="3Wi-C9-wNS" kind="presentation" identifier="LaunchCallSegue" id="0zK-Aw-DFA"/>
                         <segue destination="5pI-B2-tCm" kind="presentation" identifier="LaunchIncomingCallSegue" id="G7c-4Y-pcf"/>
+                        <segue destination="Dqm-1b-3En" kind="relationship" relationship="viewControllers" id="gvF-Ie-WLG"/>
+                        <segue destination="iji-v9-KEx" kind="relationship" relationship="viewControllers" id="mbS-nV-BXL"/>
+                        <segue destination="khe-IV-xWM" kind="relationship" relationship="viewControllers" id="GXZ-Sc-zxF"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gQp-UJ-tFg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1199" y="-210"/>
+        </scene>
+        <!--Logging-->
+        <scene sceneID="qT0-Dx-tMo">
+            <objects>
+                <viewController storyboardIdentifier="loggingViewControllerID" title="Settings" id="khe-IV-xWM" userLabel="Logging" customClass="LoggingViewController" customModule="iOSVoIPLib_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FJn-YM-j95"/>
+                        <viewControllerLayoutGuide type="bottom" id="2Q3-HA-Fly"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HWz-t2-4ti" userLabel="Logging View Controller">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LKh-oE-zf7">
+                                <rect key="frame" x="16" y="0.0" width="343" height="618"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="LKh-oE-zf7" firstAttribute="leading" secondItem="HWz-t2-4ti" secondAttribute="leadingMargin" id="BWQ-0u-gus"/>
+                            <constraint firstItem="2Q3-HA-Fly" firstAttribute="top" secondItem="LKh-oE-zf7" secondAttribute="bottom" id="USN-3J-hHx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LKh-oE-zf7" secondAttribute="trailing" id="XPk-IV-rWn"/>
+                            <constraint firstItem="LKh-oE-zf7" firstAttribute="top" secondItem="FJn-YM-j95" secondAttribute="bottom" id="Y76-Dw-a3e"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Logging" id="Hkh-De-3cJ" userLabel="Logging">
+                        <imageReference key="image" image="doc.text.fill" catalog="system" symbolScale="large" renderingMode="template"/>
+                    </tabBarItem>
+                    <connections>
+                        <outlet property="textView" destination="LKh-oE-zf7" id="LaP-Pt-dsm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VFy-bz-bEy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="452" y="976"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
@@ -581,12 +633,16 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="delete.left.fill" catalog="system" width="128" height="104"/>
+        <image name="doc.text.fill" catalog="system" width="115" height="128"/>
         <image name="gearshape.fill" catalog="system" width="128" height="121"/>
         <image name="phone.down.fill" catalog="system" width="128" height="52"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

@@ -10,6 +10,7 @@ import AVFoundation
 
 class CallViewController: UIViewController, CallEvent {
     
+    @IBOutlet weak var callTextView: UITextView!
     @IBOutlet weak var callTitle: UILabel!
     @IBOutlet weak var callSubtitle: UILabel!
     @IBOutlet weak var callDuration: UILabel!
@@ -67,7 +68,7 @@ class CallViewController: UIViewController, CallEvent {
             muteButton.setTitle("MUTE", for: .normal)
         }
 
-        if call.state == .paused {
+        if call.state == .paused || call.state == .pausedByRemote {
             holdButton.isSelected = true
             holdButton.setTitle("UNHOLD", for: .normal)
         } else {
@@ -78,7 +79,7 @@ class CallViewController: UIViewController, CallEvent {
         if callManager.isInTranfer {
             inactiveCallStatus.isHidden = false
             if let inactiveCall = callManager.inactiveCall {
-                inactiveCallStatus.text = "\(inactiveCall.displayName) - \(inactiveCall.remoteNumber)"
+                inactiveCallStatus.text = "Call with \(inactiveCall.displayName) on hold"
             }
             transferButton.setTitle("MERGE", for: .normal)
         } else {
@@ -87,17 +88,18 @@ class CallViewController: UIViewController, CallEvent {
             transferButton.setTitle("TRANSFER", for: .normal)
         }
         
-        if call.state != .connected {
+        callTextView.text = voipLib.actions(call: call).callInfo()
+
+        if call.state == .streamsRunning {
+            let speakerIsOn = !audioSession.currentRoute.outputs.filter({$0.portType == .builtInSpeaker}).isEmpty
+            speakerButton.isSelected = speakerIsOn
+            
+            let earpieceIsOn = !audioSession.currentRoute.outputs.filter({$0.portType == .builtInReceiver}).isEmpty
+            earpieceButton.isSelected = earpieceIsOn
+        } else {
             speakerButton.isSelected = false
             earpieceButton.isSelected = false
-            return
         }
-        
-        let speakerIsOn = !audioSession.currentRoute.outputs.filter({$0.portType == .builtInSpeaker}).isEmpty
-        speakerButton.isSelected = speakerIsOn
-        
-        let earpieceIsOn = !audioSession.currentRoute.outputs.filter({$0.portType == .builtInReceiver}).isEmpty
-        earpieceButton.isSelected = earpieceIsOn
     }
     
     @IBAction func unwind( _ seg: UIStoryboardSegue) {}

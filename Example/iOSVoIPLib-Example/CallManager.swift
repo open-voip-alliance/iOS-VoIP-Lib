@@ -74,7 +74,7 @@ class CallManager: CallDelegate {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             if let nav = appDelegate.window?.rootViewController as? UITabBarController {
                 nav.performSegue(withIdentifier: "LaunchCallSegue", sender: nav)
-            }            
+            }
         } else {
             print("Detected outgoing call creation while already in call so not doing anything")
         }

@@ -20,6 +20,8 @@
 		83A03A6B261DF188001E3D23 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83A03A08261DE710001E3D23 /* Main.storyboard */; };
 		83A03A6C261DF188001E3D23 /* IncomingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A03A09261DE710001E3D23 /* IncomingCallViewController.swift */; };
 		83A03A6D261DF188001E3D23 /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A03A07261DE710001E3D23 /* CallViewController.swift */; };
+		83E5087D26307E5E00267CF9 /* LoggingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E5087C26307E5E00267CF9 /* LoggingViewController.swift */; };
+		83E508C726371AA100267CF9 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E508C626371AA100267CF9 /* LogManager.swift */; };
 		F71DAD4E55BCEBA788F2163F /* Pods_iOSVoIPLib_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 059BFDD3A7B6FECD90EB2342 /* Pods_iOSVoIPLib_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +61,8 @@
 		83A03A1C261DE710001E3D23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83A03A1D261DE710001E3D23 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83A03A97261E04AF001E3D23 /* TestsInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TestsInfo.plist; sourceTree = "<group>"; };
+		83E5087C26307E5E00267CF9 /* LoggingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingViewController.swift; sourceTree = "<group>"; };
+		83E508C626371AA100267CF9 /* LogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
 		8FA9869346A3F1CECE7AA701 /* Pods-iOSVoIPLib_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSVoIPLib_Example.release.xcconfig"; path = "Target Support Files/Pods-iOSVoIPLib_Example/Pods-iOSVoIPLib_Example.release.xcconfig"; sourceTree = "<group>"; };
 		9DDF9B1901B8BCE6C1AF239E /* Pods-iOSVoIPLib_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSVoIPLib_Tests.release.xcconfig"; path = "Target Support Files/Pods-iOSVoIPLib_Tests/Pods-iOSVoIPLib_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		B3B4BB21563C158E0B4AB32C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 				83A03A05261DE710001E3D23 /* UI */,
 				83A03A1B261DE710001E3D23 /* Supporting Files */,
 				83A039FF261DE710001E3D23 /* CallManager.swift */,
+				83E508C626371AA100267CF9 /* LogManager.swift */,
 				8300A904262627D000D4D366 /* CallEvent.swift */,
 				83A03A1D261DE710001E3D23 /* AppDelegate.swift */,
 			);
@@ -142,9 +147,10 @@
 			isa = PBXGroup;
 			children = (
 				83A03A07261DE710001E3D23 /* CallViewController.swift */,
-				83A03A0B261DE710001E3D23 /* DialerViewController.swift */,
 				83A03A09261DE710001E3D23 /* IncomingCallViewController.swift */,
+				83A03A0B261DE710001E3D23 /* DialerViewController.swift */,
 				83A03A0C261DE710001E3D23 /* SettingsViewController.swift */,
+				83E5087C26307E5E00267CF9 /* LoggingViewController.swift */,
 				83A03A08261DE710001E3D23 /* Main.storyboard */,
 				83A03A06261DE710001E3D23 /* LaunchScreen.xib */,
 				83A03A0A261DE710001E3D23 /* Images.xcassets */,
@@ -405,6 +411,8 @@
 				8300A905262627D000D4D366 /* CallEvent.swift in Sources */,
 				83A03A6C261DF188001E3D23 /* IncomingCallViewController.swift in Sources */,
 				83A03A63261DF181001E3D23 /* AppDelegate.swift in Sources */,
+				83E508C726371AA100267CF9 /* LogManager.swift in Sources */,
+				83E5087D26307E5E00267CF9 /* LoggingViewController.swift in Sources */,
 				83A03A4B261DE92A001E3D23 /* MicPermissionHelper.swift in Sources */,
 				83A03A38261DE8E2001E3D23 /* CallManager.swift in Sources */,
 			);

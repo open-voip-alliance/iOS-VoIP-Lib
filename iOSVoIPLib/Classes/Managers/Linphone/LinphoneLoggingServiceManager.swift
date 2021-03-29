@@ -8,10 +8,12 @@
 import linphonesw
 
 class LinphoneLoggingServiceManager: LoggingServiceDelegate {
+    
+    weak var loggingDelegate: LoggingDelegate?
+    
     override func onLogMessageWritten(logService: LoggingService, domain: String, lev: LogLevel, message: String) {
-        let queue = DispatchQueue(label: "com.iOSVoIPLib.logging", qos: .background)
-        queue.async {
-            print("Log: \(message)")
-        }
+        print("Linphone: \(message)")
+        loggingDelegate?.onLinphoneLog(message: message)
     }
 }
+

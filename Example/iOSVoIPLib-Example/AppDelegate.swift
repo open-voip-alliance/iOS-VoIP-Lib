@@ -16,9 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let defaults = UserDefaults.standard
     
     let callManager = CallManager()
+    let logManager = LogManager()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         
         let auth = Auth(name: self.userDefault(key: "username"), password: self.userDefault(key: "password"), domain: self.userDefault(key: "domain"), port: Int(self.userDefault(key: "port")) ?? 0)
         
