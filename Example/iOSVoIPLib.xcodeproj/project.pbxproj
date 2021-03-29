@@ -8,12 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		366642408801634064BA7858 /* Pods_iOSVoIPLib_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E5653FAA79B0A98A024ECCB /* Pods_iOSVoIPLib_Example.framework */; };
-		5C92D9E025DEE02E003019D1 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92D9DE25DEE02E003019D1 /* TableViewController.swift */; };
-		5C92D9E125DEE02E003019D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C92D9DF25DEE02E003019D1 /* Main.storyboard */; };
-		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
-		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		8300A905262627D000D4D366 /* CallEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8300A904262627D000D4D366 /* CallEvent.swift */; };
+		83A03A38261DE8E2001E3D23 /* CallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A039FF261DE710001E3D23 /* CallManager.swift */; };
+		83A03A4B261DE92A001E3D23 /* MicPermissionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A03A11261DE710001E3D23 /* MicPermissionHelper.swift */; };
+		83A03A63261DF181001E3D23 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A03A1D261DE710001E3D23 /* AppDelegate.swift */; };
+		83A03A67261DF188001E3D23 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A03A0C261DE710001E3D23 /* SettingsViewController.swift */; };
+		83A03A68261DF188001E3D23 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A03A06261DE710001E3D23 /* LaunchScreen.xib */; };
+		83A03A69261DF188001E3D23 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83A03A0A261DE710001E3D23 /* Images.xcassets */; };
+		83A03A6A261DF188001E3D23 /* DialerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A03A0B261DE710001E3D23 /* DialerViewController.swift */; };
+		83A03A6B261DF188001E3D23 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83A03A08261DE710001E3D23 /* Main.storyboard */; };
+		83A03A6C261DF188001E3D23 /* IncomingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A03A09261DE710001E3D23 /* IncomingCallViewController.swift */; };
+		83A03A6D261DF188001E3D23 /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A03A07261DE710001E3D23 /* CallViewController.swift */; };
 		F71DAD4E55BCEBA788F2163F /* Pods_iOSVoIPLib_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 059BFDD3A7B6FECD90EB2342 /* Pods_iOSVoIPLib_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,20 +38,27 @@
 		17AD4A56BAB50115AEA64458 /* Pods-iOSVoIPLib_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSVoIPLib_Example.debug.xcconfig"; path = "Target Support Files/Pods-iOSVoIPLib_Example/Pods-iOSVoIPLib_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		387E13631CFDC82954474438 /* iOSVoIPLib.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = iOSVoIPLib.podspec; path = ../iOSVoIPLib.podspec; sourceTree = "<group>"; };
 		5B084054B2EA811B7BCC8101 /* Pods-iOSVoIPLib_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSVoIPLib_Tests.debug.xcconfig"; path = "Target Support Files/Pods-iOSVoIPLib_Tests/Pods-iOSVoIPLib_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		5C92D9DE25DEE02E003019D1 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
-		5C92D9DF25DEE02E003019D1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		5C92D9F025DEE1D2003019D1 /* iOSVoIPLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSVoIPLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C92DA1725DEE3FB003019D1 /* iOSVoIPLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSVoIPLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C92DA2F25DEE663003019D1 /* iOSVoIPLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSVoIPLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* iOSVoIPLib_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSVoIPLib_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* iOSVoIPLib_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSVoIPLib_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		6E5653FAA79B0A98A024ECCB /* Pods_iOSVoIPLib_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSVoIPLib_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8300A904262627D000D4D366 /* CallEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallEvent.swift; sourceTree = "<group>"; };
+		839DBD7A26149F1D00020B12 /* iOSVoIPLib_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iOSVoIPLib_Example.entitlements; sourceTree = "<group>"; };
+		83A039FF261DE710001E3D23 /* CallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallManager.swift; sourceTree = "<group>"; };
+		83A03A06261DE710001E3D23 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		83A03A07261DE710001E3D23 /* CallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewController.swift; sourceTree = "<group>"; };
+		83A03A08261DE710001E3D23 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		83A03A09261DE710001E3D23 /* IncomingCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewController.swift; sourceTree = "<group>"; };
+		83A03A0A261DE710001E3D23 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		83A03A0B261DE710001E3D23 /* DialerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerViewController.swift; sourceTree = "<group>"; };
+		83A03A0C261DE710001E3D23 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		83A03A11261DE710001E3D23 /* MicPermissionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicPermissionHelper.swift; sourceTree = "<group>"; };
+		83A03A1C261DE710001E3D23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		83A03A1D261DE710001E3D23 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		83A03A97261E04AF001E3D23 /* TestsInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TestsInfo.plist; sourceTree = "<group>"; };
 		8FA9869346A3F1CECE7AA701 /* Pods-iOSVoIPLib_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSVoIPLib_Example.release.xcconfig"; path = "Target Support Files/Pods-iOSVoIPLib_Example/Pods-iOSVoIPLib_Example.release.xcconfig"; sourceTree = "<group>"; };
 		9DDF9B1901B8BCE6C1AF239E /* Pods-iOSVoIPLib_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSVoIPLib_Tests.release.xcconfig"; path = "Target Support Files/Pods-iOSVoIPLib_Tests/Pods-iOSVoIPLib_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		B3B4BB21563C158E0B4AB32C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -75,8 +88,9 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				839DBD7A26149F1D00020B12 /* iOSVoIPLib_Example.entitlements */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
-				607FACD21AFB9204008FA782 /* Example for iOSVoIPLib */,
+				83A039FC261DE710001E3D23 /* iOSVoIPLib-Example */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				B79BDB34F0677D148B4810E2 /* Pods */,
@@ -93,43 +107,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		607FACD21AFB9204008FA782 /* Example for iOSVoIPLib */ = {
-			isa = PBXGroup;
-			children = (
-				5C92D9DF25DEE02E003019D1 /* Main.storyboard */,
-				5C92D9DE25DEE02E003019D1 /* TableViewController.swift */,
-				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACDC1AFB9204008FA782 /* Images.xcassets */,
-				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
-				607FACD31AFB9204008FA782 /* Supporting Files */,
-			);
-			name = "Example for iOSVoIPLib";
-			path = iOSVoIPLib;
-			sourceTree = "<group>";
-		};
-		607FACD31AFB9204008FA782 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				607FACD41AFB9204008FA782 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
-				607FACE91AFB9204008FA782 /* Supporting Files */,
+				83A03A97261E04AF001E3D23 /* TestsInfo.plist */,
 			);
 			path = Tests;
-			sourceTree = "<group>";
-		};
-		607FACE91AFB9204008FA782 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				607FACEA1AFB9204008FA782 /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
@@ -140,6 +124,41 @@
 				C4B8E07076E48232EBD4073C /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		83A039FC261DE710001E3D23 /* iOSVoIPLib-Example */ = {
+			isa = PBXGroup;
+			children = (
+				83A03A05261DE710001E3D23 /* UI */,
+				83A03A1B261DE710001E3D23 /* Supporting Files */,
+				83A039FF261DE710001E3D23 /* CallManager.swift */,
+				8300A904262627D000D4D366 /* CallEvent.swift */,
+				83A03A1D261DE710001E3D23 /* AppDelegate.swift */,
+			);
+			path = "iOSVoIPLib-Example";
+			sourceTree = "<group>";
+		};
+		83A03A05261DE710001E3D23 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				83A03A07261DE710001E3D23 /* CallViewController.swift */,
+				83A03A0B261DE710001E3D23 /* DialerViewController.swift */,
+				83A03A09261DE710001E3D23 /* IncomingCallViewController.swift */,
+				83A03A0C261DE710001E3D23 /* SettingsViewController.swift */,
+				83A03A08261DE710001E3D23 /* Main.storyboard */,
+				83A03A06261DE710001E3D23 /* LaunchScreen.xib */,
+				83A03A0A261DE710001E3D23 /* Images.xcassets */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		83A03A1B261DE710001E3D23 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				83A03A11261DE710001E3D23 /* MicPermissionHelper.swift */,
+				83A03A1C261DE710001E3D23 /* Info.plist */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		B79BDB34F0677D148B4810E2 /* Pods */ = {
@@ -253,9 +272,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C92D9E125DEE02E003019D1 /* Main.storyboard in Resources */,
-				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
-				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				83A03A69261DF188001E3D23 /* Images.xcassets in Resources */,
+				83A03A68261DF188001E3D23 /* LaunchScreen.xib in Resources */,
+				83A03A6B261DF188001E3D23 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +317,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOSVoIPLib_Example/Pods-iOSVoIPLib_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/QuickTableViewController/QuickTableViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
 				"${BUILT_PRODUCTS_DIR}/iOSVoIPLib/iOSVoIPLib.framework",
 				"${PODS_ROOT}/linphone-sdk/linphone-sdk/apple-darwin/Frameworks/bctoolbox-ios.framework",
 				"${PODS_ROOT}/linphone-sdk/linphone-sdk/apple-darwin/Frameworks/bctoolbox-tester.framework",
@@ -321,6 +342,8 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QuickTableViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSVoIPLib.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/bctoolbox-ios.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/bctoolbox-tester.framework",
@@ -376,8 +399,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
-				5C92D9E025DEE02E003019D1 /* TableViewController.swift in Sources */,
+				83A03A67261DF188001E3D23 /* SettingsViewController.swift in Sources */,
+				83A03A6A261DF188001E3D23 /* DialerViewController.swift in Sources */,
+				83A03A6D261DF188001E3D23 /* CallViewController.swift in Sources */,
+				8300A905262627D000D4D366 /* CallEvent.swift in Sources */,
+				83A03A6C261DF188001E3D23 /* IncomingCallViewController.swift in Sources */,
+				83A03A63261DF181001E3D23 /* AppDelegate.swift in Sources */,
+				83A03A4B261DE92A001E3D23 /* MicPermissionHelper.swift in Sources */,
+				83A03A38261DE8E2001E3D23 /* CallManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,17 +427,6 @@
 			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		607FACDE1AFB9204008FA782 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				607FACDF1AFB9204008FA782 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		607FACED1AFB9204008FA782 /* Debug */ = {
@@ -525,8 +543,9 @@
 			baseConfigurationReference = 17AD4A56BAB50115AEA64458 /* Pods-iOSVoIPLib_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = iOSVoIPLib_Example.entitlements;
 				DEVELOPMENT_TEAM = E2Q9UE8HM6;
-				INFOPLIST_FILE = iOSVoIPLib/Info.plist;
+				INFOPLIST_FILE = "iOSVoIPLib-Example/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks ${TARGET_BUILD_DIR}/iOSVoIPLib.framework";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.openvoipalliance.iOSVoIPLib-Example";
@@ -541,8 +560,9 @@
 			baseConfigurationReference = 8FA9869346A3F1CECE7AA701 /* Pods-iOSVoIPLib_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = iOSVoIPLib_Example.entitlements;
 				DEVELOPMENT_TEAM = E2Q9UE8HM6;
-				INFOPLIST_FILE = iOSVoIPLib/Info.plist;
+				INFOPLIST_FILE = "iOSVoIPLib-Example/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks ${TARGET_BUILD_DIR}/iOSVoIPLib.framework";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.openvoipalliance.iOSVoIPLib-Example";
@@ -556,6 +576,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B084054B2EA811B7BCC8101 /* Pods-iOSVoIPLib_Tests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				DEVELOPMENT_TEAM = E2Q9UE8HM6;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -566,7 +587,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = Tests/TestsInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -580,13 +601,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9DDF9B1901B8BCE6C1AF239E /* Pods-iOSVoIPLib_Tests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				DEVELOPMENT_TEAM = E2Q9UE8HM6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = Tests/TestsInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
