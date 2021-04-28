@@ -1,5 +1,4 @@
 import XCTest
-import iOSVoIPLib
 
 class Tests: XCTestCase {
     

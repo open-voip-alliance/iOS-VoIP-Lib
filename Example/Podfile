@@ -6,10 +6,12 @@ platform :ios, '11.3'
 
 target 'iOSVoIPLib_Example' do
   pod 'iOSVoIPLib', :path => '../'
-
+  pod 'QuickTableViewController'
+  pod 'Swinject'
+  
   target 'iOSVoIPLib_Tests' do
-    inherit! :search_paths
-
-    
+      inherit! :search_paths
   end
+  
 end
+
