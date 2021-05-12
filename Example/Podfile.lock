@@ -36,7 +36,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  iOSVoIPLib: 5d0a20228ab3f9bdcbb7e35903be4009bfa267b3
+  iOSVoIPLib: 2f55881766cf9aeb93e8be5e1f78142a42036e98
   linphone-sdk: 91183cb3e3224d2d1a211357cd6a39d61636d17d
   QuickTableViewController: 25e698de1546c2b829c543d91b64ebc6e884acfc
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e

@@ -36,7 +36,7 @@
 /* Begin PBXFileReference section */
 		059BFDD3A7B6FECD90EB2342 /* Pods_iOSVoIPLib_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSVoIPLib_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		17AD4A56BAB50115AEA64458 /* Pods-iOSVoIPLib_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSVoIPLib_Example.debug.xcconfig"; path = "Target Support Files/Pods-iOSVoIPLib_Example/Pods-iOSVoIPLib_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		387E13631CFDC82954474438 /* iOSVoIPLib.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = iOSVoIPLib.podspec; path = ../iOSVoIPLib.podspec; sourceTree = "<group>"; };
+		387E13631CFDC82954474438 /* iOSVoIPLib.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = iOSVoIPLib.podspec; path = ../iOSVoIPLib.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		5B084054B2EA811B7BCC8101 /* Pods-iOSVoIPLib_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSVoIPLib_Tests.debug.xcconfig"; path = "Target Support Files/Pods-iOSVoIPLib_Tests/Pods-iOSVoIPLib_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		5C92D9F025DEE1D2003019D1 /* iOSVoIPLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSVoIPLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C92DA1725DEE3FB003019D1 /* iOSVoIPLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSVoIPLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
