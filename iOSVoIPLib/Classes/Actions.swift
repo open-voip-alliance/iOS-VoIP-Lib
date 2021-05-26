@@ -91,4 +91,11 @@ public class Actions {
     public func sendDtmf(dtmf: String) {
         sipManager.sendDtmf(call: call, dtmf: dtmf)
     }
+    
+    /// Get call information.
+    ///
+    /// - Returns: A string with the call info, empty when could not get any.
+    public func callInfo() -> String {
+        sipManager.provideCallInfo(call: call)
+    }
 }

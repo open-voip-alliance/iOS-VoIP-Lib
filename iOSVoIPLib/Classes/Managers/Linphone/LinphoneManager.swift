@@ -24,6 +24,16 @@ class LinphoneManager: SipManagerProtocol {
     private var stateManager:LinphoneStateManager!
     private var proxyConfig: ProxyConfig!
     private let logManager = LinphoneLoggingServiceManager()
+
+    var loggingDelegate: LoggingDelegate? {
+        get {
+            logManager.loggingDelegate
+        }
+        set {
+            logManager.loggingDelegate = newValue
+        }
+    }
+    
     var sipRegistrationStatus: SipRegistrationStatus = SipRegistrationStatus.none
     
     var isMicrophoneMuted: Bool {
@@ -38,11 +48,11 @@ class LinphoneManager: SipManagerProtocol {
         self.config = config
 
         if isInitialized {
-            debugPrint("Linphone already init")
+            logVoIPLib(message: "Linphone already init")
             return true
         }
 
-        debugPrint("Linphone init")
+        logVoIPLib(message: "Linphone init")
 
         lc = try! Factory.Instance.createCore(configPath: "", factoryConfigPath: "", systemContext: nil)
         stateManager = LinphoneStateManager(manager: self)
@@ -97,9 +107,14 @@ class LinphoneManager: SipManagerProtocol {
             startLinphoneIterating()
         } catch {
             isInitialized = false
-            print("Linphone starting failed")
+            logVoIPLib(message: "Linphone starting failed")
         }
         return isInitialized
+    }
+    
+    fileprivate func logVoIPLib(message: String) {
+        loggingDelegate?.onVoIPLibLog(message: message)
+        debugPrint(message)
     }
     
     private func startLinphoneIterating() {
@@ -160,9 +175,9 @@ class LinphoneManager: SipManagerProtocol {
             
             lc.useRfc2833ForDtmf = true
             lc.ipv6Enabled = true
-            print("Linphone successfully registering")
+            logVoIPLib(message: "Linphone successfully registering")
         } catch (let error) {
-            print("Linphone registering identify error: \(error)")
+            logVoIPLib(message: "Linphone registering identify error: \(error)")
             return false
         }
         return true
@@ -176,14 +191,14 @@ class LinphoneManager: SipManagerProtocol {
                 }
                 return
             }
-            print("Linphone unregistering")
+            self.logVoIPLib(message: "Linphone unregistering")
             for config in self.lc.proxyConfigList {
                 config.edit() // start editing proxy configuration
                 config.registerEnabled = false // de-activate registration for this proxy config
                 do {
                     try config.done()
                 } catch {
-                    print("Linphone unregistering error on proxy: \(error)")
+                    self.logVoIPLib(message: "Linphone unregistering error on proxy: \(error)")
                 } // initiate REGISTER with expire = 0
             }
 
@@ -202,7 +217,7 @@ class LinphoneManager: SipManagerProtocol {
         isRegistered = false
         lc.removeDelegate(delegate: stateManager)
         lc.stop()
-        print("Linphone unregistered")
+        logVoIPLib(message: "Linphone unregistered")
     }
     
     func terminateAllCalls() {
@@ -244,11 +259,11 @@ class LinphoneManager: SipManagerProtocol {
             disabledPayloads.removeAll(where: { $0.mimeType.uppercased() == codec.rawValue.uppercased() })
             let enabled = codecs.contains(codec)
             guard let payload = lc.getPayloadType(type: codec.rawValue, rate: -1, channels: -1) else { continue }
-            print("Enable result \(payload.mimeType): \(payload.enable(enabled: enabled) == 0)")
+            logVoIPLib(message: "Enable result \(payload.mimeType): \(payload.enable(enabled: enabled) == 0)")
             
         }
         disabledPayloads.forEach( {
-            print("Disabling result \($0.mimeType): \($0.enable(enabled: false) == 0)")
+            logVoIPLib(message: "Disabling result \($0.mimeType): \($0.enable(enabled: false) == 0)")
         })
     }
     
@@ -261,17 +276,17 @@ class LinphoneManager: SipManagerProtocol {
     }
     
     func setAudio(enabled:Bool) {
-        debugPrint("Linphone set audio: \(enabled)")
+        logVoIPLib(message: "Linphone set audio: \(enabled)")
         lc.activateAudioSession(actived: enabled)
     }
     
     func setHold(call:Call, onHold hold:Bool) -> Bool {
         do {
             if hold {
-                print("Pausing call.")
+                logVoIPLib(message: "Pausing call.")
                 try call.pause()
             } else {
-                print("Resuming call.")
+                logVoIPLib(message: "Resuming call.")
                 try call.resume()
             }
             return true
@@ -283,17 +298,17 @@ class LinphoneManager: SipManagerProtocol {
     func transfer(call: Call, to number: String) -> Bool {
         do {
             try call.linphoneCall.transfer(referTo: number)
-            print("Transfer was successful")
+            logVoIPLib(message: "Transfer was successful")
             return true
         } catch (let error) {
-            print("Transfer failed: \(error)")
+            logVoIPLib(message: "Transfer failed: \(error)")
             return false
         }
     }
     
     func beginAttendedTransfer(call: Call, to number:String) -> AttendedTransferSession? {
         guard let destinationCall = self.call(to: number) else {
-            print("Unable to make call for target call")
+            logVoIPLib(message: "Unable to make call for target call")
             return nil
         }
         
@@ -303,10 +318,10 @@ class LinphoneManager: SipManagerProtocol {
     func finishAttendedTransfer(attendedTransferSession: AttendedTransferSession) -> Bool {
         do {
             try attendedTransferSession.from.linphoneCall.transferToAnother(dest: attendedTransferSession.to.linphoneCall)
-            print("Transfer was successful")
+            logVoIPLib(message: "Transfer was successful")
             return true
         } catch (let error) {
-            print("Transfer failed: \(error)")
+            logVoIPLib(message: "Transfer failed: \(error)")
             return false
         }
     }
@@ -317,15 +332,24 @@ class LinphoneManager: SipManagerProtocol {
                 let dtmfDigit = dtmf.utf8CString[0]
                 try call.linphoneCall.sendDtmf(dtmf: dtmfDigit)
             } catch (let error) {
-                print("Sending dtmf failed: \(error)")
+                logVoIPLib(message: "Sending dtmf failed: \(error)")
             }
         } else {
             do {
                 try call.linphoneCall.sendDtmfs(dtmfs: dtmf)
             } catch (let error) {
-                print("Sending dtmfs failed: \(error)")
+                logVoIPLib(message: "Sending dtmfs failed: \(error)")
             }
         }
+    }
+    
+    /// Provide human readable call info
+    ///
+    /// - Parameter call: the Call object
+    /// - Returns: a String with all call info
+    func provideCallInfo(call: Call) -> String {
+        let callInfoProvider = CallInfoProvider(call: call)
+        return callInfoProvider.provideCallInfo()
     }
 }
 
@@ -340,15 +364,15 @@ class LinphoneStateManager:CoreDelegate {
     }
     
     override func onCallStateChanged(lc: Core, call: LinphoneCall, cstate: LinphoneCall.State, message: String) {
-        print("OnCallStateChanged, state:\(cstate) with message:\(message).")
+        linphoneManager.logVoIPLib(message: "OnCallStateChanged, state:\(cstate) with message:\(message).")
 
         guard let voipLibCall = Call(linphoneCall: call) else {
-            print("Unable to create call, no remote address")
+            linphoneManager.logVoIPLib(message: "Unable to create call, no remote address")
             return
         }
         
         guard let delegate = self.linphoneManager.config?.callDelegate else {
-            print("Unable to send events as no call delegate")
+            linphoneManager.logVoIPLib(message: "Unable to send events as no call delegate")
             return
         }
         

@@ -23,6 +23,15 @@ public class VoIPLib {
         get { isRegistered && isInitialized }
     }
     
+    public var loggingDelegate: LoggingDelegate? {
+        get {
+            sipManager.loggingDelegate
+        }
+        set {
+            sipManager.loggingDelegate = newValue
+        }
+    }
+    
     let sipManager: SipManagerProtocol
     
     init() {
