@@ -45,4 +45,10 @@ public protocol CallDelegate: AnyObject {
     ///     - call: The call
     ///     - message: The message from the server.
     func error(_ call:Call, message: String)
+    
+    /// An Attended Transfer has completed and the two calls have been merged, this will occur before receiving the ended and released events.
+    ///
+    /// - Parameters:
+    ///     - call: The call
+    func attendedTransferMerged(_ call: Call)
 }

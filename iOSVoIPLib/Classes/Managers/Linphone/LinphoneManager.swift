@@ -395,6 +395,20 @@ class LinphoneStateManager:CoreDelegate {
         }
     }
     
+    override func onTransferStateChanged(lc: Core, transfered: LinphoneCall, newCallState: LinphoneCall.State) {
+        guard let delegate = self.linphoneManager.config?.callDelegate else {
+            linphoneManager.logVoIPLib(message: "Unable to send call transfer event as no call delegate")
+            return
+        }
+        
+        guard let voipLibCall = Call(linphoneCall: transfered) else {
+            linphoneManager.logVoIPLib(message: "Unable to create call, no remote address")
+            return
+        }
+        
+        delegate.attendedTransferMerged(voipLibCall)
+    }
+    
     /**
             Some headers only appear in the initial invite, this will check for any headers we have flagged to be preserved
      and retain them across all iterations of the LinphoneCall.
