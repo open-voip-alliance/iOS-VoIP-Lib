@@ -63,6 +63,11 @@ public class Call:NSObject {
         return Quality(average: linphoneCall.averageQuality, current: linphoneCall.currentQuality)
     }
     
+    /// This can be used to check if different Call objects have the same linphoneCall property.
+    public var callHash: Int? {
+        return linphoneCall.getCobject?.hashValue
+    }
+    
     init?(linphoneCall: LinphoneCall) {
         guard linphoneCall.remoteAddress != nil else { return nil }
         self.linphoneCall = linphoneCall
