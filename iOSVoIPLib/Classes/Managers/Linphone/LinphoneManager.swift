@@ -71,11 +71,14 @@ class LinphoneManager: SipManagerProtocol {
     func startLinphone() -> Bool {
         isInitialized = true
 
-        #if DEBUG
         Factory.Instance.enableLogCollection(state: LogCollectionState.Enabled)
         let log = LoggingService.Instance
         log.addDelegate(delegate: logManager)
+        
+        #if DEBUG
         log.logLevel = LogLevel.Debug
+        #else
+        log.logLevel = LogLevel.Warning
         #endif
         
         lc.addDelegate(delegate: stateManager)
