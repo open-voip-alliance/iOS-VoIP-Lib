@@ -10,6 +10,7 @@ import iOSVoIPLib
 
 class CallManager: CallDelegate {
     
+    
     let voipLib: VoIPLib
     
     private var internalActiveCall: Call? = nil
@@ -110,5 +111,9 @@ class CallManager: CallDelegate {
     
     func broadcast() {
         callEvent?.onUpdate()
+    }    
+    
+    func attendedTransferMerged(_ call: Call) {
+    
     }
 }
