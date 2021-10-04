@@ -82,7 +82,7 @@ class CallManager: CallDelegate {
     }
 
     public func callUpdated(_ call: Call, message: String) {
-        print("Call has updated")
+        print("Call has updated: \(message)")
         broadcast()
     }
 

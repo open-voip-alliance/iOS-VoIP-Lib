@@ -1,23 +1,23 @@
 PODS:
   - iOSVoIPLib (0.1.0):
-    - linphone-sdk (= 4.4.1)
-  - linphone-sdk (4.4.1):
-    - linphone-sdk/all-frameworks (= 4.4.1)
-    - linphone-sdk/app-extension (= 4.4.1)
-    - linphone-sdk/app-extension-swift (= 4.4.1)
-    - linphone-sdk/basic-frameworks (= 4.4.1)
-    - linphone-sdk/swift (= 4.4.1)
-  - linphone-sdk/all-frameworks (4.4.1)
-  - linphone-sdk/app-extension (4.4.1)
-  - linphone-sdk/app-extension-swift (4.4.1):
+    - linphone-sdk (= 5.0.9)
+  - linphone-sdk (5.0.9):
+    - linphone-sdk/all-frameworks (= 5.0.9)
+    - linphone-sdk/app-extension (= 5.0.9)
+    - linphone-sdk/app-extension-swift (= 5.0.9)
+    - linphone-sdk/basic-frameworks (= 5.0.9)
+    - linphone-sdk/swift (= 5.0.9)
+  - linphone-sdk/all-frameworks (5.0.9)
+  - linphone-sdk/app-extension (5.0.9)
+  - linphone-sdk/app-extension-swift (5.0.9):
     - linphone-sdk/app-extension
-  - linphone-sdk/basic-frameworks (4.4.1):
+  - linphone-sdk/basic-frameworks (5.0.9):
     - linphone-sdk/app-extension
-  - linphone-sdk/swift (4.4.1):
+  - linphone-sdk/swift (5.0.9):
     - linphone-sdk/app-extension-swift
     - linphone-sdk/basic-frameworks
   - QuickTableViewController (1.3.1)
-  - Swinject (2.7.1)
+  - Swinject (2.8.1)
 
 DEPENDENCIES:
   - iOSVoIPLib (from `../`)
@@ -36,11 +36,11 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  iOSVoIPLib: 5d0a20228ab3f9bdcbb7e35903be4009bfa267b3
-  linphone-sdk: 91183cb3e3224d2d1a211357cd6a39d61636d17d
+  iOSVoIPLib: 3d42db807a9eb5a49103c57de69a11fadc68e603
+  linphone-sdk: 42ff9193d1138a2d5ba0a3938b835fa5dbed3c2a
   QuickTableViewController: 25e698de1546c2b829c543d91b64ebc6e884acfc
-  Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
+  Swinject: 97112918bd7e0785dc2df7036213f3c8cbba6586
 
 PODFILE CHECKSUM: e2d164d553ce78efa7d3841ad2cab242473d03f7
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

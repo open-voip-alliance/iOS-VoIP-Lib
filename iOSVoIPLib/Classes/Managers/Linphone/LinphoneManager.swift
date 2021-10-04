@@ -85,7 +85,7 @@ class LinphoneManager: SipManagerProtocol {
         lc.adaptiveRateControlEnabled = true
         lc.echoCancellationEnabled = true
         lc.callkitEnabled = false
-        lc.setUserAgent(uaName: config?.userAgent ?? "", version: "")
+        lc.setUserAgent(name: config?.userAgent ?? "", version: "")
         lc.dnsSrvEnabled = false
         lc.dnsSearchEnabled = false
         lc.dnsServers = ["8.8.8.8", "8.8.4.4"]
@@ -106,8 +106,6 @@ class LinphoneManager: SipManagerProtocol {
         
         do {
             try lc.start()
-            
-            startLinphoneIterating()
         } catch {
             isInitialized = false
             logVoIPLib(message: "Linphone starting failed")
@@ -118,15 +116,6 @@ class LinphoneManager: SipManagerProtocol {
     fileprivate func logVoIPLib(message: String) {
         loggingDelegate?.onVoIPLibLog(message: message)
         debugPrint(message)
-    }
-    
-    private func startLinphoneIterating() {
-        DispatchQueue.global().async {
-            while(self.isInitialized){
-                self.lc.iterate() // first iterate initiates registration
-                usleep(50000)
-            }
-        }
     }
         
     private func setupProxy(from:Address, encrypted:Bool) throws {
@@ -256,18 +245,24 @@ class LinphoneManager: SipManagerProtocol {
     }
     
     private func setAudioCodecs(_ codecs: [Codec]) {
-        var disabledPayloads = lc.audioPayloadTypes
-
-        for codec in Codec.allCases {
-            disabledPayloads.removeAll(where: { $0.mimeType.uppercased() == codec.rawValue.uppercased() })
-            let enabled = codecs.contains(codec)
-            guard let payload = lc.getPayloadType(type: codec.rawValue, rate: -1, channels: -1) else { continue }
-            logVoIPLib(message: "Enable result \(payload.mimeType): \(payload.enable(enabled: enabled) == 0)")
-            
+        lc?.videoPayloadTypes.forEach { payload in
+            _ = payload.enable(enabled: false)
         }
-        disabledPayloads.forEach( {
-            logVoIPLib(message: "Disabling result \($0.mimeType): \($0.enable(enabled: false) == 0)")
-        })
+        
+        lc?.audioPayloadTypes.forEach { payload in
+            let enable = !codecs.filter { selectedCodec in
+                selectedCodec.rawValue.uppercased() == payload.mimeType.uppercased()
+            }.isEmpty
+            
+            _ = payload.enable(enabled: enable)
+        }
+        
+        guard let enabled = lc?.audioPayloadTypes.filter({ payload in payload.enabled() }).map({ payload in payload.mimeType }).joined(separator: ", ") else {
+            logVoIPLib(message: "Unable to log codecs, no core")
+            return
+        }
+        
+        logVoIPLib(message: "Enabled codecs: \(enabled)")
     }
     
     private func resetAudioCodecs() {
@@ -366,21 +361,21 @@ class LinphoneStateManager:CoreDelegate {
         linphoneManager = manager
     }
     
-    override func onCallStateChanged(lc: Core, call: LinphoneCall, cstate: LinphoneCall.State, message: String) {
-        linphoneManager.logVoIPLib(message: "OnCallStateChanged, state:\(cstate) with message:\(message).")
+    func onCallStateChanged(core: Core, call: LinphoneCall, state: LinphoneCall.State, message: String) {
+        linphoneManager.logVoIPLib(message: "OnCallStateChanged, state:\(state) with message:\(message).")
 
         guard let voipLibCall = Call(linphoneCall: call) else {
             linphoneManager.logVoIPLib(message: "Unable to create call, no remote address")
             return
         }
-        
+
         guard let delegate = self.linphoneManager.config?.callDelegate else {
             linphoneManager.logVoIPLib(message: "Unable to send events as no call delegate")
             return
         }
-        
+
         DispatchQueue.main.async {
-            switch cstate {
+            switch state {
                 case .OutgoingInit:
                     delegate.outgoingCallCreated(voipLibCall)
                 case .IncomingReceived:
@@ -398,7 +393,7 @@ class LinphoneStateManager:CoreDelegate {
         }
     }
     
-    override func onTransferStateChanged(lc: Core, transfered: LinphoneCall, newCallState: LinphoneCall.State) {
+    func onTransferStateChanged(core: Core, transfered: LinphoneCall, callState: LinphoneCall.State) {
         guard let delegate = self.linphoneManager.config?.callDelegate else {
             linphoneManager.logVoIPLib(message: "Unable to send call transfer event as no call delegate")
             return
@@ -418,7 +413,7 @@ class LinphoneStateManager:CoreDelegate {
      */
     private func preserveHeaders(call: LinphoneCall) {
         headersToPreserve.forEach { key in
-            let value = call.getToHeader(name: key)
+            let value = call.getToHeader(headerName: key)
             call.params?.addCustomHeader(headerName: key, headerValue: value)
         }
     }
@@ -435,8 +430,8 @@ class RegistrationListener : CoreDelegate {
         self.core = core
     }
 
-    override func onRegistrationStateChanged(lc: Core, cfg: ProxyConfig, cstate: linphonesw.RegistrationState, message: String) {
-        switch cstate {
+    func onRegistrationStateChanged(core: Core, proxyConfig: ProxyConfig, state: linphonesw.RegistrationState, message: String) {
+        switch state {
             case .Failed:
                 linphoneManager.isRegistered = false
                 callback(.failed)
@@ -448,7 +443,7 @@ class RegistrationListener : CoreDelegate {
             case .Progress: callback(.progress)
         }
 
-        if cstate == linphonesw.RegistrationState.Ok || cstate == linphonesw.RegistrationState.Failed {
+        if state == linphonesw.RegistrationState.Ok || state == linphonesw.RegistrationState.Failed {
             core.removeDelegate(delegate: self)
         }
     }
