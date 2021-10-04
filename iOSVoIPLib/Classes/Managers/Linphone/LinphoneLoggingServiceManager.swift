@@ -11,7 +11,7 @@ class LinphoneLoggingServiceManager: LoggingServiceDelegate {
     
     weak var loggingDelegate: LoggingDelegate?
     
-    override func onLogMessageWritten(logService: LoggingService, domain: String, lev: LogLevel, message: String) {
+    func onLogMessageWritten(logService: LoggingService, domain: String, lev: LogLevel, message: String) {
         print("Linphone: \(message)")
         loggingDelegate?.onLinphoneLog(message: message)
     }
