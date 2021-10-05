@@ -39,12 +39,11 @@ public protocol CallDelegate: AnyObject {
     ///     - message: The message from the server.
     func callUpdated(_ call: Call, message: String)
     
-    /// Callback when there's an error.
+    /// When the call object has been released.
     ///
     /// - Parameters:
     ///     - call: The call
-    ///     - message: The message from the server.
-    func error(_ call:Call, message: String)
+    func callReleased(_ call:Call)
     
     /// An Attended Transfer has completed and the two calls have been merged, this will occur before receiving the ended and released events.
     ///
