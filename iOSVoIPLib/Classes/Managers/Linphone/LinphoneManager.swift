@@ -19,9 +19,10 @@ class LinphoneManager: SipManagerProtocol {
     var isInitialized: Bool = false
     var isRegistered: Bool = false
 
-    //Linphone Core
-    private var lc: Core!
-    private var stateManager:LinphoneStateManager!
+    private var linphoneCore: Core!
+    private lazy var stateManager: LinphoneStateManager = {
+        LinphoneStateManager(manager: self)
+    }()
     private var proxyConfig: ProxyConfig!
     private let logManager = LinphoneLoggingServiceManager()
 
@@ -34,10 +35,18 @@ class LinphoneManager: SipManagerProtocol {
         }
     }
     
+    private var logging: LoggingService {
+        LoggingService.Instance
+    }
+    
+    private var factory: Factory {
+        Factory.Instance
+    }
+    
     var sipRegistrationStatus: SipRegistrationStatus = SipRegistrationStatus.none
     
     var isMicrophoneMuted: Bool {
-        return !lc.micEnabled
+        return !linphoneCore.micEnabled
     }
     
     var isSpeakerOn: Bool {
@@ -52,65 +61,68 @@ class LinphoneManager: SipManagerProtocol {
             return true
         }
 
-        logVoIPLib(message: "Linphone init")
-
-        lc = try! Factory.Instance.createCore(configPath: "", factoryConfigPath: "", systemContext: nil)
-        stateManager = LinphoneStateManager(manager: self)
-
-        return startLinphone()
+        do {
+            try startLinphone()
+            return true
+        } catch {
+            logVoIPLib(message: "Failed to start Linphone \(error.localizedDescription)")
+            isInitialized = false
+            return false
+        }
     }
     
-    func initialize(config: Config) {
-        self.config = config
-    }
-
-    func swapConfig(config: Config) {
-        self.config = config
-    }
-
-    func startLinphone() -> Bool {
+    private func startLinphone() throws {
+        factory.enableLogCollection(state: LogCollectionState.Disabled)
+        logging.addDelegate(delegate: logManager)
+        logging.logLevel = LogLevel.Message
+        
+        linphoneCore = try factory.createCore(configPath: "", factoryConfigPath: "", systemContext: nil)
+        linphoneCore.addDelegate(delegate: stateManager)
+        applyPreStartConfiguration(core: linphoneCore)
         isInitialized = true
+        try linphoneCore.start()
+        applyPostStartConfiguration(core: linphoneCore)
+        configureCodecs(core: linphoneCore)
+    }
 
-        Factory.Instance.enableLogCollection(state: LogCollectionState.Enabled)
-        let log = LoggingService.Instance
-        log.addDelegate(delegate: logManager)
-        
-        #if DEBUG
-        log.logLevel = LogLevel.Debug
-        #else
-        log.logLevel = LogLevel.Warning
-        #endif
-        
-        lc.addDelegate(delegate: stateManager)
-        lc.adaptiveRateControlEnabled = true
-        lc.echoCancellationEnabled = true
-        lc.callkitEnabled = false
-        lc.setUserAgent(name: config?.userAgent ?? "", version: "")
-        lc.dnsSrvEnabled = false
-        lc.dnsSearchEnabled = false
-        lc.dnsServers = ["8.8.8.8", "8.8.4.4"]
-        
-        if let codecs = config?.codecs {
-            setAudioCodecs(codecs)
+    private func applyPreStartConfiguration(core: Core) {
+        if let transports = core.transports {
+            transports.tlsPort = 0
+            transports.udpPort = 0
+            transports.tcpPort = 0
         }
-
+        core.pushNotificationEnabled = false
+        core.callkitEnabled = false
+        core.ipv6Enabled = false
+        core.dnsSrvEnabled = false
+        core.dnsSearchEnabled = false
+        core.maxCalls = 2
+        core.uploadBandwidth = 0
+        core.downloadBandwidth = 0
+        core.mtu = 1300
+        core.guessHostname = true
+        core.incTimeout = 60
+        core.audioPort = -1
+        core.nortpTimeout = 30
+        core.avpfMode = AVPFMode.Disabled
         if let stun = config?.stun {
-            lc.natPolicy?.stunEnabled = true
-            lc.natPolicy?.stunServer = stun
-            lc.natPolicy?.resolveStunServer()
-        } else {
-            lc.natPolicy?.clear()
+            core.stunServer = stun
         }
-
-        try? lc.migrateToMultiTransport()
-        
-        do {
-            try lc.start()
-        } catch {
-            isInitialized = false
-            logVoIPLib(message: "Linphone starting failed")
+        if let natPolicy = core.natPolicy {
+            natPolicy.stunEnabled = config?.stun != nil
+            natPolicy.upnpEnabled = false
+            natPolicy.stunServer = config?.stun ?? ""
+            natPolicy.resolveStunServer()
+            core.natPolicy = natPolicy
         }
-        return isInitialized
+        core.audioJittcomp = 100
+    }
+    
+    func applyPostStartConfiguration(core: Core) {
+        core.useInfoForDtmf = true
+        core.useRfc2833ForDtmf = true
+        core.adaptiveRateControlEnabled = true
+        core.echoCancellationEnabled = true
     }
     
     fileprivate func logVoIPLib(message: String) {
@@ -120,7 +132,7 @@ class LinphoneManager: SipManagerProtocol {
         
     private func setupProxy(from:Address, encrypted:Bool) throws {
         // configure proxy entries
-        proxyConfig = try lc.createProxyConfig()
+        proxyConfig = try linphoneCore.createProxyConfig()
         try proxyConfig.setIdentityaddress(newValue: from) // set identity with user name and domain
         let serverAddress = from.domain + (encrypted ? ";transport=tls" : "") // extract domain address from identity
         try proxyConfig.setServeraddr(newValue: serverAddress) // we assume domain = proxy server address
@@ -128,8 +140,12 @@ class LinphoneManager: SipManagerProtocol {
         proxyConfig.registerEnabled = true // activate registration for this proxy config
         try proxyConfig.done()
         
-        try lc.addProxyConfig(config: proxyConfig!) // add proxy config to linphone core
-        lc.defaultProxyConfig = proxyConfig // set to default proxy
+        try linphoneCore.addProxyConfig(config: proxyConfig!) // add proxy config to linphone core
+        linphoneCore.defaultProxyConfig = proxyConfig // set to default proxy
+    }
+    
+    func swapConfig(config: Config) {
+        self.config = config
     }
     
     var registrationListener: RegistrationListener?
@@ -142,31 +158,45 @@ class LinphoneManager: SipManagerProtocol {
                 throw InitializationError.noConfigurationProvided
             }
             
-            self.registrationListener = RegistrationListener(linphoneManager: self, core: lc, callback: callback)
+            self.registrationListener = RegistrationListener(linphoneManager: self, core: linphoneCore, callback: callback)
             
-            lc.addDelegate(delegate: self.registrationListener!)
+            linphoneCore.addDelegate(delegate: self.registrationListener!)
 
             let identity = "sip:" + config.auth.name + "@" + config.auth.domain + ":\(config.auth.port)"
             let from = try factory.createAddress(addr: identity)
             try from.setTransport(newValue: config.encryption ? .Tls : .Udp)
             
-            if config.encryption, let transports:Transports = lc.transports {
-                from.secure = true //Force calling via TLS
-                transports.tlsPort = config.auth.port
-                transports.udpPort = config.auth.port
-                transports.tcpPort = config.auth.port
-                try lc.setTransports(newValue: transports)
-                try lc.setMediaencryption(newValue: MediaEncryption.SRTP)
-                lc.mediaEncryptionMandatory = true
+            if let transports = linphoneCore.transports {
+                if config.encryption {
+                    transports.tlsPort = -1
+                    transports.udpPort = 0
+                    transports.tcpPort = 0
+                } else {
+                    transports.udpPort = -1
+                    transports.tlsPort = 0
+                    transports.tcpPort = 0
+                }
+                
+                try linphoneCore.setTransports(newValue: transports)
+            }
+            
+            if config.encryption {
+                from.secure = true
+                try linphoneCore.setMediaencryption(newValue: MediaEncryption.SRTP)
+                linphoneCore.mediaEncryptionMandatory = true
+            } else {
+                from.secure = false
+                try linphoneCore.setMediaencryption(newValue: MediaEncryption.None)
+                linphoneCore.mediaEncryptionMandatory = false
             }
             
             try setupProxy(from: from, encrypted: config.encryption)
             
-            let info = try factory.createAuthInfo(username: from.username, userid: "", passwd: config.auth.password, ha1: "", realm: "", domain: "") // create authentication structure from identity
-            lc.addAuthInfo(info: info) // add authentication arianinfo to LinphoneCore
+            let info = try factory.createAuthInfo(username: from.username, userid: "", passwd: config.auth.password, ha1: "", realm: "", domain: "")
+            linphoneCore.addAuthInfo(info: info)
             
-            lc.useRfc2833ForDtmf = true
-            lc.ipv6Enabled = true
+            linphoneCore.useRfc2833ForDtmf = true
+            linphoneCore.ipv6Enabled = true
             logVoIPLib(message: "Linphone successfully registering")
         } catch (let error) {
             logVoIPLib(message: "Linphone registering identify error: \(error)")
@@ -184,7 +214,7 @@ class LinphoneManager: SipManagerProtocol {
                 return
             }
             self.logVoIPLib(message: "Linphone unregistering")
-            for config in self.lc.proxyConfigList {
+            for config in self.linphoneCore.proxyConfigList {
                 config.edit() // start editing proxy configuration
                 config.registerEnabled = false // de-activate registration for this proxy config
                 do {
@@ -196,32 +226,32 @@ class LinphoneManager: SipManagerProtocol {
 
             self.isRegistered = false
             
-            while(self.lc.proxyConfigList.contains(where: { $0.state != linphonesw.RegistrationState.Cleared } )) {
-                self.lc.iterate() // to make sure we receive call backs before shutting down
+            while(self.linphoneCore.proxyConfigList.contains(where: { $0.state != linphonesw.RegistrationState.Cleared } )) {
+                self.linphoneCore.iterate() // to make sure we receive call backs before shutting down
                 usleep(50000)
             }
-            self.lc.proxyConfigList.forEach( { self.lc.removeProxyConfig(config: $0) } )
+            self.linphoneCore.proxyConfigList.forEach( { self.linphoneCore.removeProxyConfig(config: $0) } )
         }
     }
 
     func destroy() {
         isInitialized = false
         isRegistered = false
-        lc.removeDelegate(delegate: stateManager)
-        lc.stop()
+        linphoneCore.removeDelegate(delegate: stateManager)
+        linphoneCore.stop()
         logVoIPLib(message: "Linphone unregistered")
     }
     
     func terminateAllCalls() {
         do {
-           try lc.terminateAllCalls()
+           try linphoneCore.terminateAllCalls()
         } catch {
             
         }
     }
     
     func call(to number: String) -> Call? {
-        guard let linphoneCall = lc.invite(url: number) else {return nil}
+        guard let linphoneCall = linphoneCore.invite(url: number) else {return nil}
         let call = Call.init(linphoneCall: linphoneCall)
         return isInitialized ? call : nil
     }
@@ -244,12 +274,16 @@ class LinphoneManager: SipManagerProtocol {
         }
     }
     
-    private func setAudioCodecs(_ codecs: [Codec]) {
-        lc?.videoPayloadTypes.forEach { payload in
+    private func configureCodecs(core: Core) {
+        guard let codecs = config?.codecs else {
+            return
+        }
+        
+        linphoneCore?.videoPayloadTypes.forEach { payload in
             _ = payload.enable(enabled: false)
         }
         
-        lc?.audioPayloadTypes.forEach { payload in
+        linphoneCore?.audioPayloadTypes.forEach { payload in
             let enable = !codecs.filter { selectedCodec in
                 selectedCodec.rawValue.uppercased() == payload.mimeType.uppercased()
             }.isEmpty
@@ -257,25 +291,22 @@ class LinphoneManager: SipManagerProtocol {
             _ = payload.enable(enabled: enable)
         }
         
-        guard let enabled = lc?.audioPayloadTypes.filter({ payload in payload.enabled() }).map({ payload in payload.mimeType }).joined(separator: ", ") else {
+        guard let enabled = linphoneCore?.audioPayloadTypes.filter({ payload in payload.enabled() }).map({ payload in payload.mimeType }).joined(separator: ", ") else {
             logVoIPLib(message: "Unable to log codecs, no core")
             return
         }
         
         logVoIPLib(message: "Enabled codecs: \(enabled)")
     }
-    
-    private func resetAudioCodecs() {
-        setAudioCodecs(Codec.allCases)
-    }
+
     
     func setMicrophone(muted: Bool) {
-        lc.micEnabled = !muted
+        linphoneCore.micEnabled = !muted
     }
     
     func setAudio(enabled:Bool) {
         logVoIPLib(message: "Linphone set audio: \(enabled)")
-        lc.activateAudioSession(actived: enabled)
+        linphoneCore.activateAudioSession(actived: enabled)
     }
     
     func setHold(call:Call, onHold hold:Bool) -> Bool {
@@ -383,10 +414,10 @@ class LinphoneStateManager:CoreDelegate {
                     delegate.incomingCallReceived(voipLibCall)
                 case .Connected:
                     delegate.callConnected(voipLibCall)
-                case .End:
+                case .End, .Error:
                     delegate.callEnded(voipLibCall)
-                case .Error:
-                    delegate.error(voipLibCall, message: message)
+                case .Released:
+                    delegate.callReleased(voipLibCall)
                 default:
                     delegate.callUpdated(voipLibCall, message: message)
             }

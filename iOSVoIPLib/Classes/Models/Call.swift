@@ -68,6 +68,20 @@ public class Call:NSObject {
         return linphoneCall.getCobject?.hashValue
     }
     
+    public var wasMissed: Bool {
+        guard let log = linphoneCall.callLog else {
+            return false
+        }
+        
+        let missedStatuses = [
+            LinphoneCall.Status.Missed,
+            LinphoneCall.Status.Aborted,
+            LinphoneCall.Status.EarlyAborted,
+        ]
+        
+        return log.dir == LinphoneCall.Dir.Incoming && missedStatuses.contains(log.status)
+    }
+    
     init?(linphoneCall: LinphoneCall) {
         guard linphoneCall.remoteAddress != nil else { return nil }
         self.linphoneCall = linphoneCall

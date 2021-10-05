@@ -104,9 +104,8 @@ class CallManager: CallDelegate {
         broadcast()
     }
     
-    public func error(_ call: Call, message: String) {
-        print("ERROR: \(message)")
-        callEnded(call)
+    func callReleased(_ call: Call) {
+        broadcast()
     }
     
     func broadcast() {
