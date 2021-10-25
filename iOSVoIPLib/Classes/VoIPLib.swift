@@ -23,12 +23,9 @@ public class VoIPLib {
         get { isRegistered && isInitialized }
     }
     
-    public var loggingDelegate: LoggingDelegate? {
+    public var config: Config? {
         get {
-            sipManager.loggingDelegate
-        }
-        set {
-            sipManager.loggingDelegate = newValue
+            sipManager.config
         }
     }
     
@@ -39,7 +36,9 @@ public class VoIPLib {
     }
     
     public func initialize(config: Config) {
-        _ = sipManager.initialize(config: config)
+        if (!isInitialized) {
+            _ = sipManager.initialize(config: config)
+        }
     }
 
     public func refreshConfig(config: Config) {

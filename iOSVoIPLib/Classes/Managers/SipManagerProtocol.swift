@@ -13,8 +13,8 @@ protocol SipManagerProtocol: AnyObject {
     var isMicrophoneMuted:Bool {get}
     var isRegistered:Bool {get}
     var isInitialized: Bool {get}
-    var loggingDelegate: LoggingDelegate? {get set}
 
+    var config: Config? {get}
     func initialize(config: Config) -> Bool
     func swapConfig(config: Config)
     func register(callback: @escaping RegistrationCallback) -> Bool

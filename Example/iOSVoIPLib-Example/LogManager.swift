@@ -10,16 +10,12 @@ import Foundation
 import UIKit
 import iOSVoIPLib
 
-class LogManager: LoggingDelegate {
+class LogManager {
     
     let voipLib = VoIPLib.shared
     let log = NSMutableAttributedString(string: "")
     
     var loggingViewDelegate: LoggingViewDelegate?
-    
-    init() {
-        voipLib.loggingDelegate = self
-    }
     
     func updateLog(newMessage: NSAttributedString) {
         DispatchQueue.main.async {
@@ -28,19 +24,10 @@ class LogManager: LoggingDelegate {
         }
     }
     
-    // MARK: LoggingDelegate
-    
-    func onLinphoneLog(message:String){
-        let formattedMessage = formatLogMessage(message: " Linphone: " + message + "\n\n")
-        updateLog(newMessage: formattedMessage)
-    }
-
-    func onVoIPLibLog(message: String) {
+    internal func onLogMessage(message: String) {
         let formattedMessage = formatLogMessage(message: " VoIPLib: " + message + "\n\n")
         updateLog(newMessage: formattedMessage)
     }
-
-    // MARK: Formatting message
 
     private func formatLogMessage(message: String) -> NSAttributedString{
         let boldText = currentTime()
