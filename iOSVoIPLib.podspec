@@ -18,5 +18,5 @@ This library is an opinionated sip-wrapper, currently using Linphone as the base
 
   s.source_files = 'iOSVoIPLib/Classes/**/*'
   
-  s.dependency 'linphone-sdk', '5.0.36'
+  s.dependency 'linphone-sdk', '5.0.40'
 end

@@ -13,27 +13,17 @@ typealias LinphoneCall = linphonesw.Call
 
 //CallKit: https://wiki.linphone.org/xwiki/wiki/public/view/Lib/Getting%20started/iOS/#HCallKitIntegration
 
-class LinphoneManager: SipManagerProtocol {
-    
-    var config: Config?
+class LinphoneManager: SipManagerProtocol, LoggingServiceDelegate {
+   
+    private(set) var config: Config?
     var isInitialized: Bool = false
     var isRegistered: Bool = false
-
+    
     private var linphoneCore: Core!
     private lazy var stateManager: LinphoneStateManager = {
         LinphoneStateManager(manager: self)
     }()
     private var proxyConfig: ProxyConfig!
-    private let logManager = LinphoneLoggingServiceManager()
-
-    var loggingDelegate: LoggingDelegate? {
-        get {
-            logManager.loggingDelegate
-        }
-        set {
-            logManager.loggingDelegate = newValue
-        }
-    }
     
     private var logging: LoggingService {
         LoggingService.Instance
@@ -63,6 +53,7 @@ class LinphoneManager: SipManagerProtocol {
 
         do {
             try startLinphone()
+            isInitialized = true
             return true
         } catch {
             logVoIPLib(message: "Failed to start Linphone \(error.localizedDescription)")
@@ -73,13 +64,12 @@ class LinphoneManager: SipManagerProtocol {
     
     private func startLinphone() throws {
         factory.enableLogCollection(state: LogCollectionState.Disabled)
-        logging.addDelegate(delegate: logManager)
-        logging.logLevel = LogLevel.Message
+        logging.addDelegate(delegate: self)
+        logging.logLevel = LogLevel.Warning
         
         linphoneCore = try factory.createCore(configPath: "", factoryConfigPath: "", systemContext: nil)
         linphoneCore.addDelegate(delegate: stateManager)
         applyPreStartConfiguration(core: linphoneCore)
-        isInitialized = true
         try linphoneCore.start()
         applyPostStartConfiguration(core: linphoneCore)
         configureCodecs(core: linphoneCore)
@@ -126,8 +116,7 @@ class LinphoneManager: SipManagerProtocol {
     }
     
     fileprivate func logVoIPLib(message: String) {
-        loggingDelegate?.onVoIPLibLog(message: message)
-        debugPrint(message)
+        logging.message(message: message)
     }
         
     private func setupProxy(from:Address, encrypted:Bool) throws {
@@ -235,11 +224,11 @@ class LinphoneManager: SipManagerProtocol {
     }
 
     func destroy() {
-        isInitialized = false
-        isRegistered = false
         linphoneCore.removeDelegate(delegate: stateManager)
         linphoneCore.stop()
         logVoIPLib(message: "Linphone unregistered")
+        isInitialized = false
+        isRegistered = false
     }
     
     func terminateAllCalls() {
@@ -379,6 +368,10 @@ class LinphoneManager: SipManagerProtocol {
     func provideCallInfo(call: Call) -> String {
         let callInfoProvider = CallInfoProvider(call: call)
         return callInfoProvider.provideCallInfo()
+    }
+    
+    func onLogMessageWritten(logService: LoggingService, domain: String, level: LogLevel, message: String) {
+        config?.logListener(message)
     }
 }
 

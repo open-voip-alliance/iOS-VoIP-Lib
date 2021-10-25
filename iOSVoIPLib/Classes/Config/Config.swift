@@ -4,8 +4,10 @@
 
 import Foundation
 
+public typealias LogListener = (String) -> Void
+
 public struct Config {
-    public init(auth: Auth, callDelegate: CallDelegate, encryption: Bool = true, stun: String? = nil, ring: String? = nil, codecs: [Codec] = [Codec.OPUS], userAgent: String = "iOSVoIPLib") {
+    public init(auth: Auth, callDelegate: CallDelegate, encryption: Bool = true, stun: String? = nil, ring: String? = nil, codecs: [Codec] = [Codec.OPUS], userAgent: String = "iOSVoIPLib", logListener: @escaping LogListener) {
         self.auth = auth
         self.callDelegate = callDelegate
         self.encryption = encryption
@@ -13,6 +15,7 @@ public struct Config {
         self.ring = ring
         self.codecs = codecs
         self.userAgent = userAgent
+        self.logListener = logListener
     }
     
     public let auth: Auth
@@ -22,4 +25,5 @@ public struct Config {
     public let ring: String?
     public let codecs: [Codec]
     public let userAgent: String
+    public let logListener: LogListener
 }

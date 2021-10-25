@@ -29,13 +29,23 @@ final class SettingsViewController: QuickTableViewController {
                     
                     let appDelegate = UIApplication.shared.delegate as! AppDelegate
                     let callManager = appDelegate.callManager
-                    
-                    let config = Config(auth: auth,
-                                        callDelegate: callManager,
-                                        encryption: self.defaults.bool(forKey: "encryption"))
-
                     let voipLib = VoIPLib.shared
-                    voipLib.swapConfig(config: config)
+                    
+                    guard let config = voipLib.config else {
+                        return
+                    }
+                                                 
+                    let newConfig = Config(auth: auth,
+                                           callDelegate: callManager,
+                                           encryption: self.defaults.bool(forKey: "encryption"),
+                                           stun: config.stun,
+                                           ring: config.ring,
+                                           codecs: config.codecs,
+                                           userAgent: config.userAgent,
+                                           logListener: config.logListener
+                    )
+                    
+                    voipLib.swapConfig(config: newConfig)
                             
                     print("Testing authentication..")
 
