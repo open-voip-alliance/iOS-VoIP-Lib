@@ -52,7 +52,7 @@ public class VoIPLib {
     
     /// This `registers` your user on SIP. You need this before placing a call.
     /// - Returns: Bool containing register result
-    public func register(callback: @escaping RegistrationCallback) -> Bool {
+    public func register(callback: @escaping RegistrationCallback) {
         sipManager.register(callback: callback)
     }
 
@@ -95,4 +95,8 @@ public class VoIPLib {
     public func actions(call: Call) -> Actions {
         Actions(sipManager: sipManager, call: call)
     }
+}
+
+internal func log(_ message: String) {
+    VoIPLib.shared.config?.logListener(message)
 }

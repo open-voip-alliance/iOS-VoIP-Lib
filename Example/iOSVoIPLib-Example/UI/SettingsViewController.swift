@@ -37,7 +37,6 @@ final class SettingsViewController: QuickTableViewController {
                                                  
                     let newConfig = Config(auth: auth,
                                            callDelegate: callManager,
-                                           encryption: self.defaults.bool(forKey: "encryption"),
                                            stun: config.stun,
                                            ring: config.ring,
                                            codecs: config.codecs,
