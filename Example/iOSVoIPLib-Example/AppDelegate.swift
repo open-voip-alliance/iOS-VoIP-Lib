@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let config = Config(auth: auth,
                             callDelegate: callManager,
-                            encryption: self.defaults.bool(forKey: "encryption"),
                             logListener: { message in self.logManager.onLogMessage(message: message) })
             
         voipLib.initialize(config: config)

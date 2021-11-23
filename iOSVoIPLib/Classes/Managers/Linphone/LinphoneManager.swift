@@ -23,6 +23,11 @@ class LinphoneManager: SipManagerProtocol, LoggingServiceDelegate {
     private lazy var stateManager: LinphoneStateManager = {
         LinphoneStateManager(manager: self)
     }()
+    
+    private lazy var registrationListener: RegistrationListener = {
+        RegistrationListener(linphoneManager: self)
+    }()
+    
     private var proxyConfig: ProxyConfig!
     
     private var logging: LoggingService {
@@ -69,13 +74,13 @@ class LinphoneManager: SipManagerProtocol, LoggingServiceDelegate {
         
         linphoneCore = try factory.createCore(configPath: "", factoryConfigPath: "", systemContext: nil)
         linphoneCore.addDelegate(delegate: stateManager)
-        applyPreStartConfiguration(core: linphoneCore)
+        try applyPreStartConfiguration(core: linphoneCore)
         try linphoneCore.start()
         applyPostStartConfiguration(core: linphoneCore)
         configureCodecs(core: linphoneCore)
     }
 
-    private func applyPreStartConfiguration(core: Core) {
+    private func applyPreStartConfiguration(core: Core) throws {
         if let transports = core.transports {
             transports.tlsPort = 0
             transports.udpPort = 0
@@ -106,6 +111,16 @@ class LinphoneManager: SipManagerProtocol, LoggingServiceDelegate {
             core.natPolicy = natPolicy
         }
         core.audioJittcomp = 100
+
+        if let transports = linphoneCore.transports {
+            transports.tlsPort = -1
+            transports.udpPort = 0
+            transports.tcpPort = 0
+            try linphoneCore.setTransports(newValue: transports)
+        }
+
+        try linphoneCore.setMediaencryption(newValue: MediaEncryption.SRTP)
+        linphoneCore.mediaEncryptionMandatory = true
     }
     
     func applyPostStartConfiguration(core: Core) {
@@ -118,80 +133,67 @@ class LinphoneManager: SipManagerProtocol, LoggingServiceDelegate {
     fileprivate func logVoIPLib(message: String) {
         logging.message(message: message)
     }
-        
-    private func setupProxy(from:Address, encrypted:Bool) throws {
-        // configure proxy entries
-        proxyConfig = try linphoneCore.createProxyConfig()
-        try proxyConfig.setIdentityaddress(newValue: from) // set identity with user name and domain
-        let serverAddress = from.domain + (encrypted ? ";transport=tls" : "") // extract domain address from identity
-        try proxyConfig.setServeraddr(newValue: serverAddress) // we assume domain = proxy server address
-        try proxyConfig.setRoute(newValue: serverAddress)
-        proxyConfig.registerEnabled = true // activate registration for this proxy config
-        try proxyConfig.done()
-        
-        try linphoneCore.addProxyConfig(config: proxyConfig!) // add proxy config to linphone core
-        linphoneCore.defaultProxyConfig = proxyConfig // set to default proxy
-    }
     
     func swapConfig(config: Config) {
         self.config = config
     }
-    
-    var registrationListener: RegistrationListener?
+
+    internal var registrationCallback: RegistrationCallback? = nil
     
     //MARK: - SipSdkProtocol
-    func register(callback: @escaping RegistrationCallback) -> Bool {
-        let factory = Factory.Instance
+    func register(callback: @escaping RegistrationCallback) {
         do {
             guard let config = self.config else {
                 throw InitializationError.noConfigurationProvided
             }
-            
-            self.registrationListener = RegistrationListener(linphoneManager: self, core: linphoneCore, callback: callback)
-            
-            linphoneCore.addDelegate(delegate: self.registrationListener!)
 
-            let identity = "sip:" + config.auth.name + "@" + config.auth.domain + ":\(config.auth.port)"
-            let from = try factory.createAddress(addr: identity)
-            try from.setTransport(newValue: config.encryption ? .Tls : .Udp)
-            
-            if let transports = linphoneCore.transports {
-                if config.encryption {
-                    transports.tlsPort = -1
-                    transports.udpPort = 0
-                    transports.tcpPort = 0
-                } else {
-                    transports.udpPort = -1
-                    transports.tlsPort = 0
-                    transports.tcpPort = 0
-                }
-                
-                try linphoneCore.setTransports(newValue: transports)
+            linphoneCore.removeDelegate(delegate: self.registrationListener)
+            linphoneCore.addDelegate(delegate: self.registrationListener)
+
+            self.registrationCallback = callback
+
+            if (!linphoneCore.proxyConfigList.isEmpty) {
+                log("Proxy config found, re-registering")
+                linphoneCore.refreshRegisters()
+                return
             }
             
-            if config.encryption {
-                from.secure = true
-                try linphoneCore.setMediaencryption(newValue: MediaEncryption.SRTP)
-                linphoneCore.mediaEncryptionMandatory = true
-            } else {
-                from.secure = false
-                try linphoneCore.setMediaencryption(newValue: MediaEncryption.None)
-                linphoneCore.mediaEncryptionMandatory = false
-            }
-            
-            try setupProxy(from: from, encrypted: config.encryption)
-            
-            let info = try factory.createAuthInfo(username: from.username, userid: "", passwd: config.auth.password, ha1: "", realm: "", domain: "")
-            linphoneCore.addAuthInfo(info: info)
-            
-            linphoneCore.useRfc2833ForDtmf = true
-            linphoneCore.ipv6Enabled = true
-            logVoIPLib(message: "Linphone successfully registering")
+            log("No proxy config found, registering for the first time.")
+
+            let proxyConfig = try createProxyConfig(core: linphoneCore, auth: config.auth)
+
+            try linphoneCore.addProxyConfig(config: proxyConfig)
+
+            linphoneCore.addAuthInfo(info: try createAuthInfo(auth: config.auth))
+            linphoneCore.defaultProxyConfig = linphoneCore.proxyConfigList.first
         } catch (let error) {
-            logVoIPLib(message: "Linphone registering identify error: \(error)")
-            return false
+            logVoIPLib(message: "Linphone registration failed: \(error)")
+            callback(RegistrationState.failed)
         }
-        return true
+    }
+
+    private func createAuthInfo(auth: Auth) throws -> AuthInfo {
+        return try factory.createAuthInfo(username: auth.name, userid: auth.name, passwd: auth.password, ha1: "", realm: "", domain: "\(auth.domain):\(auth.port)")
+    }
+
+    private func createProxyConfig(core: Core, auth: Auth) throws -> ProxyConfig {
+        guard let auth = config?.auth else {
+            throw InitializationError.noConfigurationProvided
+        }
+        
+        let identity = "sip:" + auth.name + "@" + auth.domain + ":\(auth.port)"
+        let proxy = "sip:\(auth.domain):\(auth.port)"
+        let identifyAddress = try factory.createAddress(addr: identity)
+
+        proxyConfig = try linphoneCore.createProxyConfig()
+        proxyConfig.registerEnabled = true
+        proxyConfig.qualityReportingEnabled = false
+        proxyConfig.qualityReportingInterval = 0
+        try proxyConfig.setIdentityaddress(newValue: identifyAddress)
+        try proxyConfig.setServeraddr(newValue: proxy)
+        proxyConfig.natPolicy = nil
+        try proxyConfig.done()
+        return proxyConfig
     }
     
     func unregister(finished:@escaping() -> ()) {
@@ -444,31 +446,19 @@ class LinphoneStateManager:CoreDelegate {
 }
 
 class RegistrationListener : CoreDelegate {
-    private let core: Core
-    private let callback: RegistrationCallback
     private let linphoneManager: LinphoneManager
     
-    init(linphoneManager: LinphoneManager, core: Core, callback: @escaping RegistrationCallback) {
+    init(linphoneManager: LinphoneManager) {
         self.linphoneManager = linphoneManager
-        self.callback = callback
-        self.core = core
     }
 
     func onRegistrationStateChanged(core: Core, proxyConfig: ProxyConfig, state: linphonesw.RegistrationState, message: String) {
-        switch state {
-            case .Failed:
-                linphoneManager.isRegistered = false
-                callback(.failed)
-            case .Ok:
-                linphoneManager.isRegistered = true
-                callback(.registered)
-            case .Cleared: callback(.cleared)
-            case .None: callback(.none)
-            case .Progress: callback(.progress)
-        }
-
+        log("Received registration state change: \(state.rawValue)")
+        
         if state == linphonesw.RegistrationState.Ok || state == linphonesw.RegistrationState.Failed {
-            core.removeDelegate(delegate: self)
+            linphoneManager.isRegistered = state == linphonesw.RegistrationState.Ok
+            linphoneManager.registrationCallback?(state == linphonesw.RegistrationState.Ok ? RegistrationState.registered : RegistrationState.failed)
+            linphoneManager.registrationCallback = nil
         }
     }
 }

@@ -17,7 +17,7 @@ protocol SipManagerProtocol: AnyObject {
     var config: Config? {get}
     func initialize(config: Config) -> Bool
     func swapConfig(config: Config)
-    func register(callback: @escaping RegistrationCallback) -> Bool
+    func register(callback: @escaping RegistrationCallback)
     func unregister(finished:@escaping() -> ())
     func destroy()
     
