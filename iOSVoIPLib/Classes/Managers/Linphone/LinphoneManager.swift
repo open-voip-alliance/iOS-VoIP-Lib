@@ -86,6 +86,7 @@ class LinphoneManager: SipManagerProtocol, LoggingServiceDelegate {
             transports.udpPort = 0
             transports.tcpPort = 0
         }
+        core.setUserAgent(name: config?.userAgent, version: nil)
         core.pushNotificationEnabled = false
         core.callkitEnabled = false
         core.ipv6Enabled = false
