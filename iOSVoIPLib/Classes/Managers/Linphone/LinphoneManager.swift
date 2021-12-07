@@ -16,7 +16,9 @@ typealias LinphoneCall = linphonesw.Call
 class LinphoneManager: SipManagerProtocol, LoggingServiceDelegate {
    
     private(set) var config: Config?
-    var isInitialized: Bool = false
+    var isInitialized: Bool {
+        linphoneCore != nil
+    }
     var isRegistered: Bool = false
     
     private var linphoneCore: Core!
@@ -58,11 +60,10 @@ class LinphoneManager: SipManagerProtocol, LoggingServiceDelegate {
 
         do {
             try startLinphone()
-            isInitialized = true
             return true
         } catch {
             logVoIPLib(message: "Failed to start Linphone \(error.localizedDescription)")
-            isInitialized = false
+            linphoneCore = nil
             return false
         }
     }
@@ -230,7 +231,7 @@ class LinphoneManager: SipManagerProtocol, LoggingServiceDelegate {
         linphoneCore.removeDelegate(delegate: stateManager)
         linphoneCore.stop()
         logVoIPLib(message: "Linphone unregistered")
-        isInitialized = false
+        linphoneCore = nil
         isRegistered = false
     }
     
